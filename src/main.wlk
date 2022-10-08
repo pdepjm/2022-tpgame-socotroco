@@ -16,9 +16,22 @@ class Personaje2 inherits Personaje{
 	method image() = "orc.png"
 }
 
-class PlacaDePresion{
-	var property position = game.center().left(1)
+object puertaCerrada{
+	var property position = game.center().up(3);
+	var property image = "puerta_cerrada.png";
+	method colisionarConPersonaje(){game.say(self,"Puerta cerrada")};
+}
+
+object puertaAbierta{
+	var property position = game.center().up(3);
+	var property image = "puerta_abierta.png";
+	method colisionarConPersonaje() = 0;
+}
+
+/*class PlacaDePresion{
+	var property position = game.center().left(3)
 	var property image = "pared.png"
+	var activa = false;
 	
 	method colisionarConPersonaje(){self.presionarse()} 
 	
@@ -29,9 +42,17 @@ class PlacaDePresion{
 	
 	game.onTick(50, "movimiento",{ caja.movete() })
 	
-}
+}*/
 
-const placa1 = new PlacaDePresion()
+object placa{
+	var property position = game.center().left(3)
+	var property image = "pared.png"
+	var activa = false;
+	
+	method colisionarConPersonaje(){self.activarPlaca()};
+	
+	method activarPlaca(){activa = true;game.say(self,"Someone is on me");game.removeVisual(puertaCerrada);game.addVisual(puertaAbierta)};
+}
 
 
 const personajeFuerte = new Personaje1()
