@@ -5,7 +5,7 @@ class Personaje{
 	method moverA(dir) {
 		position = dir.siguientePosicion(position) 
 	}
-	method colisionarConPersonaje() = 0
+	method colisionarConPersonaje(){}
 }
 
 class Personaje1 inherits Personaje{
@@ -13,9 +13,13 @@ class Personaje1 inherits Personaje{
 }
 
 class Personaje2 inherits Personaje{
-	method image() = "orc.png"
+	method image() = "SeñorPepino.png"
 }
 
+const personajeFuerte = new Personaje1()
+const personajeInteligente = new Personaje2()
+
+/*
 object puertaCerrada{
 	var property position = game.center().up(3);
 	var property image = "puerta_cerrada.png";
@@ -28,7 +32,7 @@ object puertaAbierta{
 	method colisionarConPersonaje() = 0;
 }
 
-/*class PlacaDePresion{
+class PlacaDePresion{
 	var property position = game.center().left(3)
 	var property image = "pared.png"
 	var activa = false;
@@ -42,19 +46,28 @@ object puertaAbierta{
 	
 	game.onTick(50, "movimiento",{ caja.movete() })
 	
-}*/
-
-object placa{
-	var property position = game.center().left(3)
-	var property image = "pared.png"
-	var activa = false;
-	
-	method colisionarConPersonaje(){self.activarPlaca()};
-	
-	method activarPlaca(){activa = true;game.say(self,"Someone is on me");game.removeVisual(puertaCerrada);game.addVisual(puertaAbierta)};
 }
 
+* */
 
-const personajeFuerte = new Personaje1()
-const personajeInteligente = new Personaje2()
+class Placa{
+	var property position
+	var property image = "placaRoja.png"
+	var activada = false;
+	
+	method colisionarConPersonaje(){self.activarPlaca()}
+	
+	
+	method activarPlaca(){image = "placaVerde.png"}
+}
+
+class Pared{
+	var property position
+	var property image = "pared.jpg"
+	
+	method colisionarConPersonaje(){}
+	
+	
+	
+}
 
