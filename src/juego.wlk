@@ -13,13 +13,14 @@ object juego {
 		game.start()
 	}
 	
+	method cargarEscenario(){
+		game.addVisual(placa)
+	}
+	
 	method agregarPersonajes(){
 		game.addVisual(personajeFuerte)
 		game.addVisual(personajeInteligente)
-	}
-	
-	method cargarEscenario(){
-		game.addVisual(placa1)
+		game.addVisual(puertaCerrada)
 	}
 	
 	method hacerConfiguracionInicial() {
@@ -48,7 +49,6 @@ object juego {
 	}
 
 	method configurarAcciones() {
-		//TODO: Código autogenerado 
-		
+		//TODO: Self-generated code
 	}	
 }
