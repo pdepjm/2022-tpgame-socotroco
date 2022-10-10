@@ -6,8 +6,8 @@ import main.*
 
 object juego {
 	method iniciar() {
-		cfg.configurarTodo()		
-		nivel1.cargarEscenario()
+		gestorNiveles.nivelActual().configuracionInicial()
+		cfg.configurarPantalla()
 		game.start()
 	}
 }

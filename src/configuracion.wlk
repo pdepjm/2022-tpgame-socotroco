@@ -3,13 +3,6 @@ import main.*
 import direcciones.*
 
 object cfg{
-	method configurarTodo(){
-		self.configurarPantalla()
-		self.agregarPersonajes()
-		self.configurarTeclas()
-		self.configurarColisiones()
-	}
-	
 	method configurarPantalla() {
 		game.title("Piramide de Maslow")
 		game.width(18)
@@ -18,6 +11,19 @@ object cfg{
 		game.boardGround("fondoGris.jpg")
 	}
 	
+	method configurarPersonajes(){
+		self.agregarPersonajes()
+		self.configurarColisiones()
+		self.configurarTeclas()
+	}
+	
+	
+	method agregarPersonajes(){
+		game.addVisual(personajeFuerte)
+		game.addVisual(personajeInteligente)
+	}
+	
+	// Config personajes
 	method configurarTeclas() {
 		keyboard.w().onPressDo({personajeFuerte.moverA(arriba)})
 		keyboard.s().onPressDo({personajeFuerte.moverA(abajo)})
@@ -30,13 +36,9 @@ object cfg{
 		keyboard.right().onPressDo({personajeInteligente.moverA(derecha)})
 	}
 
+	// Config Personajes
 	method configurarColisiones(){
-		game.onCollideDo(personajeFuerte, {objeto => objeto.colisionarConPersonaje()})
-		game.onCollideDo(personajeInteligente, {objeto => objeto.colisionarConPersonaje()})
-	}
-	
-	method agregarPersonajes(){
-		game.addVisual(personajeFuerte)
-		game.addVisual(personajeInteligente)
+		game.onCollideDo(personajeFuerte, {objeto => objeto.colisionarConPersonaje(personajeFuerte)})
+		game.onCollideDo(personajeInteligente, {objeto => objeto.colisionarConPersonaje(personajeInteligente)})
 	}
 }

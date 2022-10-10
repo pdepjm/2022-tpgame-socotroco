@@ -6,7 +6,7 @@ class Personaje{
 	method moverA(dir) {
 		position = dir.siguientePosicion(position) 
 	}
-	method colisionarConPersonaje(){}
+	method colisionarConPersonaje(personaje){}
 }
 
 class Personaje1 inherits Personaje{
@@ -20,58 +20,44 @@ class Personaje2 inherits Personaje{
 const personajeFuerte = new Personaje1()
 const personajeInteligente = new Personaje2()
 
-/*
-object puertaCerrada{
-	var property position = game.center().up(3);
-	var property image = "puerta_cerrada.png";
-	method colisionarConPersonaje(){game.say(self,"Puerta cerrada")};
-}
 
-object puertaAbierta{
-	var property position = game.center().up(3);
-	var property image = "puerta_abierta.png";
-	method colisionarConPersonaje() = 0;
+object objetoGenerico{
+	var property position = game.at(100,100)
 }
-
-class PlacaDePresion{
-	var property position = game.center().left(3)
-	var property image = "pared.png"
-	var activa = false;
-	
-	method colisionarConPersonaje(){self.presionarse()} 
-	
-	method presionarse(){
-		image = "orc.png"
-		game.schedule(50, {self.image("pared.png")})
-	} 
-	
-	game.onTick(50, "movimiento",{ caja.movete() })
-	
-}
-
-* */
 
 class Placa{
 	var property position
 	var property image = "placaRoja.png"
-	var activada = false;
+	var property activada = false;
+	var property ultimoColisionador = objetoGenerico
 	
-	method colisionarConPersonaje(){self.activarPlaca()}
+	method colisionarConPersonaje(_){
+		
+	}
+	
+	method configuracionInicial(){
+		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca})
+		game.onTick(25, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activarPlaca()} else {self.desactivarPlaca()}})
+	}
 	
 	method crear() = game.addVisual(self)
-	method activa() = activada;
 	method activarPlaca(){
 		image = "placaVerde.png";
 		activada = true;
-		if(nivel1.placas().all({placa => placa.activa()})){nivel1.puerta().abierta(true)};
+		// if(nivel1.placas().all({placa => placa.activada()})){nivel1.puerta().abierta(true)}; // Esto no debería chequearse aca
 	}
+	
+	method desactivarPlaca(){
+		image = "placaRoja.png";
+		activada = false;
+	}	
 }
 
 class Pared{
 	var property position
 	var property image = "pared.jpg"
 	
-	method colisionarConPersonaje(){}
+	method colisionarConPersonaje(_){}
 	method crear() = game.addVisual(self)
 }
 /* 
@@ -99,7 +85,25 @@ class Puerta{
 	
 	method crear() = game.addVisual(self);
 	
-	method colisionarConPersonaje(){
-		if(abierta){game.say(nivel1.puerta(),"Welcome to the next level")};
+	method abrir(){
+		if (!abierta){
+			abierta = true
+			image = "puerta_abierta.png"	
+		}
+	}
+	
+	method cerrar(){
+		if (abierta){
+			abierta = false
+			image = "puerta_cerrada.png"
+		}
+			
+	}
+	
+	method colisionarConPersonaje(personaje){
+		if(abierta){
+			game.say(personaje,"Pasé al siguiente nivel!")
+			game.schedule(3000, { gestorNiveles.cargarSiguienteNivel() })
+		};
 	}
 }
