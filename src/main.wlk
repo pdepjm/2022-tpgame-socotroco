@@ -1,4 +1,5 @@
 import wollok.game.*
+import niveles.*
 
 class Personaje{
 	var property position = game.center()
@@ -58,7 +59,12 @@ class Placa{
 	method colisionarConPersonaje(){self.activarPlaca()}
 	
 	method crear() = game.addVisual(self)
-	method activarPlaca(){image = "placaVerde.png"}
+	method activa() = activada;
+	method activarPlaca(){
+		image = "placaVerde.png";
+		activada = true;
+		if(nivel1.placas().all({placa => placa.activa()})){nivel1.puerta().abierta(true)};
+	}
 }
 
 class Pared{
@@ -88,7 +94,12 @@ class Paredes{
 
 class Puerta{
 	var property image = "puerta_cerrada.png"
-	var property position 
+	var property position;
+	var property abierta = false;
 	
-	method crear() = game.addVisual(self)
+	method crear() = game.addVisual(self);
+	
+	method colisionarConPersonaje(){
+		if(abierta){game.say(nivel1.puerta(),"Welcome to the next level")};
+	}
 }
