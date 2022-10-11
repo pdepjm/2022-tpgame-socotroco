@@ -10,8 +10,10 @@ class Personaje{
 		}
 	}
 	
-	method puedeMoverseA(posicion) = game.getObjectsIn(posicion).any({objeto => objeto.puedePisarse()}) || game.getObjectsIn(posicion).isEmpty()
+	method puedeMoverseA(posicion) = game.getObjectsIn(posicion).all({objeto => objeto.puedePisarse()}) || game.getObjectsIn(posicion).isEmpty()
 	// Los objetos que pueden pisarse son los pinches, las placas y códigos	
+	
+	method puedePisarse() = true
 	
 	method colisionarConPersonaje(personaje){}
 	
@@ -20,6 +22,15 @@ class Personaje{
 
 class PersonajeFuerte inherits Personaje{
 	method image() = "orc.png"
+	
+	override method moverA(dir){
+		if (self.puedeMoverseA(dir.siguientePosicion(position))){
+			position = dir.siguientePosicion(position)
+		}
+		else{
+			game.getObjectsIn(self.siguientePosicion(dir)).findOrElse({objeto => objeto.image() == "caja.png"},{objetoGenerico}).moverA(dir)	
+		}
+	}
 	
 }
 
@@ -33,6 +44,12 @@ const personajeInteligente = new PersonajeInteligente(position = game.center().r
 
 object objetoGenerico{
 	var property position = game.at(100,100)
+	
+	
+	method image() = ""
+	
+	method moverA(dir){}
+	
 }
 
 class Piso{
