@@ -39,13 +39,14 @@ class Nivel{
 		game.addVisual(caja)
 	}
 	
-	
+		
 	method requisitosCumplidos() = 
 		placas.all({placa => placa.activada()}) // y también agregar si están todos los códigos desbloqueados
 }
 
 const nivel1 = new Nivel(
 	siguienteNivel = nivel2,
+	 
 	 paredes = [new Pared(position = game.at(2,2)),
 	 	new Pared(position = game.at(1,1)),
 	 	new Pared(position = game.at(2,1)),
@@ -114,6 +115,7 @@ const nivel1 = new Nivel(
 	 	new Pared(position = game.at(10,9)),
 	 	new Pared(position = game.at(9,9)),
 	 	new Pared(position = game.at(0,0))],
+	 	 
 	 placas = [new Placa(position = game.at(7,2))],
 	 puerta = new Puerta(position = game.at(10,8)),
 	 caja = new Caja(position = game.at(4,5))
