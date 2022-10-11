@@ -18,7 +18,8 @@ class Nivel{
 	var property paredes = []
 	var property placas = []
 	var property caja
-	var property puerta = null
+	var property puerta 
+	var property pinches = []
 	var property siguienteNivel
 	
 	method configuracionInicial(){
@@ -35,6 +36,7 @@ class Nivel{
 		paredes.forEach({pared => pared.crear()})
 		placas.forEach({placa => placa.crear()})
 		placas.forEach({placa => placa.configuracionInicial()}) // por el tema del ontick de cada placa
+		pinches.forEach({pinche => pinche.crear()})
 		game.addVisual(puerta)
 		game.addVisual(caja)
 	}
@@ -88,7 +90,8 @@ const nivel1 = new Nivel(
 	 	 
 	 placas = [new Placa(position = game.at(7,2))],
 	 puerta = new Puerta(position = game.at(10,8)),
-	 caja = new Caja(position = game.at(4,5))
+	 caja = new Caja(position = game.at(4,5)),
+	 pinches = [new Pinche(position = game.at(8,3))]
 )
 
 const nivel2 = new Nivel(
@@ -99,7 +102,8 @@ const nivel2 = new Nivel(
 	 	new Pared(position = game.at(10,12))],
 	 placas = [new Placa(position = game.at(0,0)), new Placa(position = game.at(1,1))],
 	 puerta = new Puerta(position = game.at(15,0)),
-	 caja = new Caja(position = game.at(5,5))
+	 caja = new Caja(position = game.at(5,5)),
+	 pinches = new Pinche(position = game.at(8,3))
 )
 
 

@@ -165,3 +165,15 @@ class Puerta{
 		};
 	}
 }
+
+class Pinche{
+	var property image = "pinches.png"
+	var property position
+	var property puedePisarse = true 
+	
+	method crear() = game.addVisual(self);
+	
+	method colisionarConPersonaje(personaje){
+		game.stop()
+	}
+}
