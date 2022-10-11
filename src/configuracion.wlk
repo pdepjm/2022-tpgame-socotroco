@@ -5,8 +5,8 @@ import direcciones.*
 object cfg{
 	method configurarPantalla() {
 		game.title("Piramide de Maslow")
-		game.width(18)
-		game.height(11)
+		game.width(11)
+		game.height(10)
 		game.cellSize(64)
 		game.boardGround("fondoGris.jpg")
 	}
@@ -29,6 +29,7 @@ object cfg{
 		keyboard.s().onPressDo({personajeFuerte.moverA(abajo)})
 		keyboard.a().onPressDo({personajeFuerte.moverA(izquierda)})
 		keyboard.d().onPressDo({personajeFuerte.moverA(derecha)})
+		keyboard.space().onPressDo({personajeFuerte.moverCaja()})
 		
 		keyboard.up().onPressDo({personajeInteligente.moverA(arriba)})
 		keyboard.down().onPressDo({personajeInteligente.moverA(abajo)})

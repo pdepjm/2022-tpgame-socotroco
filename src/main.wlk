@@ -2,7 +2,7 @@ import wollok.game.*
 import niveles.*
 
 class Personaje{
-	var property position = game.center()
+	var property position;
 	method moverA(dir) {
 		position = dir.siguientePosicion(position) 
 	}
@@ -11,18 +11,30 @@ class Personaje{
 
 class Personaje1 inherits Personaje{
 	method image() = "orc.png"
+	/*method moverCaja(){
+		Queda a ver como evaluar las posiciones
+	}*/ 
 }
 
 class Personaje2 inherits Personaje{
 	method image() = "SeñorPepino.png"
 }
 
-const personajeFuerte = new Personaje1()
-const personajeInteligente = new Personaje2()
+const personajeFuerte = new Personaje1(position = game.center().left(1))
+const personajeInteligente = new Personaje2(position = game.center().right(1))
 
 
 object objetoGenerico{
 	var property position = game.at(100,100)
+}
+
+class Caja{
+	var property position
+	
+	method image() = "caja.png"
+	method colisionarConPersonaje(_){
+		
+	}
 }
 
 class Placa{
