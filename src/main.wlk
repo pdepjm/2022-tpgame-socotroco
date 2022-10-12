@@ -61,6 +61,31 @@ class Piso{
 	method image() = "puerta_cerrada.png"
 }
 
+class Codigo{
+	var property position
+	var property puedePisarse = true
+	var property resuelto = false
+	var property image = "codigo_no_resuelto.png"
+	var property ultimoColisionador = objetoGenerico
+	
+	method colisionarConPersonaje(personaje){}
+	method resolverCodigo(){resuelto = true}
+	method image() = image
+	
+	method configuracionInicial(){
+		game.onCollideDo(self, {objetoSobreCodigo => ultimoColisionador = objetoSobreCodigo})
+		game.onTick(25, "Desbloquear código", {if(ultimoColisionador == personajeInteligente){self.resolverCodigo();image = "codigo.png";}})
+		game.onTick(35, "Mantener código desbloqueado", {if(resuelto and ultimoColisionador.position() != position){game.schedule(5000,{self.bloquearCodigo()})}})
+	}
+	
+	method bloquearCodigo(){
+		resuelto = false
+		ultimoColisionador = objetoGenerico
+		image = "codigo_no_resuelto.png"
+	}
+	
+}
+
 class Caja{
 	var property position
 	var property puedePisarse = false
@@ -100,7 +125,6 @@ class Placa{
 	method activarPlaca(){
 		image = "placaVerde.png";
 		activada = true;
-		// if(nivel1.placas().all({placa => placa.activada()})){nivel1.puerta().abierta(true)}; // Esto no debería chequearse aca
 	}
 	
 	method desactivarPlaca(){
@@ -139,14 +163,15 @@ class Puerta{
 	var property image = "puerta_cerrada.png"
 	var property position;
 	var property abierta = false;
-	var property puedePisarse = true
+	var property puedePisarse = false
 	
 	method crear() = game.addVisual(self);
 	
 	method abrir(){
 		if (!abierta){
 			abierta = true
-			image = "puerta_abierta.png"	
+			image = "puerta_abierta.png"
+			puedePisarse = true
 		}
 	}
 	
@@ -154,15 +179,13 @@ class Puerta{
 		if (abierta){
 			abierta = false
 			image = "puerta_cerrada.png"
+			puedePisarse = false
 		}
 			
 	}
 	
-	method colisionarConPersonaje(personaje){
-		if(abierta){
-			game.say(personaje,"Pasé al siguiente nivel!")
-			game.schedule(3000, { gestorNiveles.cargarSiguienteNivel() })
-		};
+	method colisionarConPersonaje(_){
+		
 	}
 }
 
@@ -175,5 +198,16 @@ class Pinche{
 	
 	method colisionarConPersonaje(personaje){
 		game.stop()
+	}
+}
+
+class Pancho{ //Objeto para pasar al nivel 2
+	var property image = "pancho.png"
+	var property position
+	var property puedePisarse = true
+	
+	method colisionarConPersonaje(personaje){
+		game.say(personaje,"Pasé de nivel!")
+		game.schedule(3000, { gestorNiveles.cargarSiguienteNivel()})
 	}
 }
