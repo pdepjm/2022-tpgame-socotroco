@@ -1,6 +1,57 @@
+import wollok.game.*
+import configuracion.*
+import direcciones.*
+import juego.*
+import main.*
+import niveles.*
 
-test "testX" {
+describe "Piramide De Maslow" {
+	
+	const placa1 = new Placa(position = game.at(7, 2), image = "placaRoja.png", activada = false, ultimoColisionador = objetoGenerico, puedePisarse = true)
+	const caja1 = new Caja(position = game.at(4, 5), puedePisarse = false)
+	// const pancho1 = new Pancho(image = "pancho.png", position = game.at(9, 9), puedePisarse = true)
 
-	assert.that(true)
+	test "Si el personaje fuerte interactua con la caja esta se mueve una posicion"
+	{
+		personajeFuerte.position(game.at(3, 5))
+		assert.equals(game.at(3, 5), personajeFuerte.position())
+		assert.equals(game.at(4, 5), caja1.position())
+		personajeFuerte.moverA(derecha)
+		assert.equals(game.at(3, 5), personajeFuerte.position())
+		// Falla: expected game.at(3,5) but found game.at(4,5) en linea 20
+		assert.equals(game.at(5, 5), caja1.position())
+	}
+	
+	test "Si el personaje fuerte se mueve hacia abajo, no puede porque hay una pared"
+	{
+		assert.equals(game.at(1, 2), personajeFuerte.position())
+		personajeFuerte.moverA(abajo)
+		assert.equals(game.at(1, 2), personajeFuerte.position()) 
+		// Falla: expected game.at(1,2) but found game.at(1,1) en linea 32
+	}
+	
+	test "Si el personaje inteligente se posiciona a la izquierda de la caja e intenta moverla no puede, se queda en la misma posicion"
+	{
+		personajeInteligente.position(game.at(5, 5))
+		assert.equals(game.at(5, 5), personajeInteligente.position())
+		assert.equals(game.at(4, 5), caja1.position())
+		personajeInteligente.moverA(izquierda)
+		assert.equals(game.at(5, 5), personajeInteligente.position())
+		// Falla: expected game.at(5,5) but found game.at(4,5) en linea 42
+		assert.equals(game.at(4, 5), caja1.position())
+	}
+	 
+	test "Si el personaje inteligente esta en la misma posicion que la placa esta se activa"
+	{
+		personajeInteligente.position(placa1.position())		
+		assert.equals(game.at(7, 2), personajeInteligente.position())
+		// assert.equals("placaVerde.png", placa1.activarPlaca())
+		// Tira error diciendo que placa1.activarPlaca() no hace nada
+	}
 
+	/*test "Si el personaje Inteligente llega al pancho pasa al siguiente nivel"
+	{
+		pancho1.position(game.at(9, 9))
+		assert.equals(personajeInteligente.position(game.at(9, 9)))
+	}*/
 }
