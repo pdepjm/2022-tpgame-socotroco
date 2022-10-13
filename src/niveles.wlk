@@ -16,9 +16,9 @@ object gestorNiveles{
 class Nivel{
 	var property paredes = []
 	var property placas = []
-	var property caja
+	var property cajas = []
 	var property puerta = null
-	var property codigo
+	var property codigos = []
 	var property objetoGanador
 	var property pinches = []
 	var property siguienteNivel
@@ -34,20 +34,30 @@ class Nivel{
 	}
 	
 	method crearYConfigurarObjetos(){
-		paredes.forEach({pared => pared.crear()})
-		placas.forEach({placa => placa.crear()})
-		placas.forEach({placa => placa.configuracionInicial()}) // por el tema del ontick de cada placa
-		game.addVisual(codigo)
+		self.crearTodos(paredes)
+		self.crearTodos(codigos)
+		self.crearTodos(cajas)
+		self.crearTodos(pinches)
+		self.crearTodos(placas)
+		
+		self.configurarTodos(placas)
+		self.configurarTodos(codigos)
+		
 		game.addVisual(puerta)
-		pinches.forEach({pinche => pinche.crear()})
-		game.addVisual(caja)
 		game.addVisual(objetoGanador)
-		codigo.configuracionInicial()
+	}
+	
+	method crearTodos(listaObjetos){
+		listaObjetos.forEach({objeto => objeto.crear()})
+	}
+	
+	method configurarTodos(listaObjetos){
+		listaObjetos.forEach({objeto => objeto.configuracionInicial()})
 	}
 	
 		
 	method requisitosCumplidos() = 
-		placas.all({placa => placa.activada()}) and codigo.resuelto()
+		placas.all({placa => placa.activada()}) and codigos.all({codigo => codigo.resuelto()})
 }
 
 const nivel1 = new Nivel(
@@ -94,10 +104,10 @@ const nivel1 = new Nivel(
 	 	new Pared(position = game.at(8,9)),
 	 	new Pared(position = game.at(10,7))],
 	 	
-	 codigo = new Codigo(position = game.at(0,7)),	 
+	 codigos = [new Codigo(position = game.at(0,7))],	 
 	 placas = [new Placa(position = game.at(7,2))],
 	 puerta = new Puerta(position = game.at(9,7)),
-	 caja = new Caja(position = game.at(4,5)),
+	 cajas = [new Caja(position = game.at(8,5))],
 	 objetoGanador = new Pancho(position = game.at(9,9)),
 	 pinches = [new Pinche(position = game.at(8,3))]
 	 
@@ -111,10 +121,10 @@ const nivel2 = new Nivel(
 	 	new Pared(position = game.at(10,12))],
 	 placas = [new Placa(position = game.at(0,0)), new Placa(position = game.at(1,1))],
 	 puerta = new Puerta(position = game.at(15,0)),
-	 caja = new Caja(position = game.at(5,5)),
-	 codigo = new Codigo(position = game.at(2,2)),
+	 cajas = [new Caja(position = game.at(5,5))],
+	 codigos = [new Codigo(position = game.at(2,2))],
 	 objetoGanador = new Pancho(position = game.at(10,9)),
-	 pinches = new Pinche(position = game.at(8,3))
+	 pinches = [new Pinche(position = game.at(8,3))]
 	 
 )
 
