@@ -1,0 +1,69 @@
+import wollok.game.*
+import configuracion.*
+import direcciones.*
+import juego.*
+import main.*
+import niveles.*
+
+describe "Piramide De Maslow" {
+	
+	// const pancho1 = new Pancho(image = "pancho.png", position = game.at(9, 9), puedePisarse = true)
+
+	test "Si el personaje fuerte interactua con la caja esta se mueve una posicion"
+	{
+		game.clear()
+		const caja1 = new Caja(position = game.at(4, 5), puedePisarse = false)
+		game.addVisual(caja1)
+		game.addVisual(personajeFuerte)
+		personajeFuerte.position(game.at(3, 5))
+		personajeFuerte.moverA(derecha)
+		assert.equals(game.at(5, 5), caja1.position())
+	}
+	
+	test "Si el personaje se mueve hacia abajo, no puede porque hay una pared"
+	{
+		game.clear()
+		game.addVisual(personajeFuerte)
+		personajeFuerte.position(game.at(3, 5))
+		const pared = new Pared(position = game.at(3, 4), image = "pared.png", puedePisarse = false)
+		game.addVisual(pared)
+		personajeFuerte.moverA(abajo)
+		assert.equals(personajeFuerte.position(), game.at(3,5)) 
+		// Falla: expected game.at(1,2) but found game.at(1,1) en linea 32
+	}
+	
+	test "El personaje inteligente no puede mover la caja"
+	{
+		game.clear()
+		game.addVisual(personajeInteligente)
+		personajeInteligente.position(game.at(4,5))
+		const caja = new Caja(position = game.at(5, 5), puedePisarse = false)
+		game.addVisual(caja)
+		personajeInteligente.moverA(derecha)
+		assert.equals(game.at(4, 5), personajeInteligente.position())
+		assert.equals(game.at(5, 5), caja.position())
+	}
+	 
+	test "Si el personaje esta en la misma posicion que la placa esta se activa"
+	{
+		game.clear()
+		const placa = new Placa(position = game.at(3,3), image = "placaRoja.png", activada = false, ultimoColisionador = objetoGenerico, puedePisarse = true)
+		game.addVisual(placa)
+		placa.configuracionInicial()
+		personajeInteligente.position(game.at(3,2))	
+		game.addVisual(personajeInteligente)
+		personajeInteligente.moverA(arriba)
+		assert.that(placa.activada())
+	}
+
+	test "Si el personaje llega al pancho pasa al siguiente nivel"
+	{
+		game.clear()
+		const pancho = new Pancho(image = "pancho.png", position = game.at(3,3), puedePisarse = true)
+		game.addVisual(pancho)
+		personajeInteligente.position(game.at(3,2))
+		game.addVisual(personajeInteligente)
+		personajeInteligente.moverA(arriba)
+		game.schedule(3100, {assert.that(gestorNiveles.nivelActual() == "nivel2")})//No funciona
+	}
+}
