@@ -3,7 +3,7 @@ import niveles.*
 
 class Objeto{
 	var property position = null
-	var property puedePisarse = false
+	var property puedePisarse = true
 	
 	method crear() = game.addVisual(self)
 	
@@ -25,7 +25,6 @@ class ObjetoMovible inherits Objeto{
 }
 
 class Personaje inherits ObjetoMovible{
-	override method puedePisarse() = true
 	method pincharse() = self.morir()
 	method morir() = game.stop()
 }
@@ -54,26 +53,14 @@ const personajeFuerte = new PersonajeFuerte()
 const personajeInteligente = new PersonajeInteligente()
 
 
-object objetoGenerico{
-	var property position = game.at(100,100)
-	
-	method image() = ""
-	
-	method moverA(dir){}
-	
-}
-
 class Codigo inherits Objeto{
-	var property resuelto = false
+	var property activado = false
 	var property image = "codigo_no_resuelto.png"
-	var property ultimoColisionador = objetoGenerico
 	
 	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo
 	
-	override method puedePisarse() = true
-	
 	method resolverCodigo(){
-		resuelto = true
+		activado = true
 		image = "codigo.png"
 		gscCounter += 1
 		game.schedule(5000, {gscCounter -= 1})
@@ -82,50 +69,48 @@ class Codigo inherits Objeto{
 	method image() = image
 	
 	method configuracionInicial(){
-		game.onCollideDo(self, {objetoSobreCodigo => ultimoColisionador = objetoSobreCodigo})
-		game.onTick(25, "Desbloquear código", {if(ultimoColisionador == personajeInteligente && ultimoColisionador.position() == self.position()) {self.resolverCodigo()}})
+		game.onTick(25, "Desbloquear código", {if(personajeInteligente.position() == self.position()) {self.resolverCodigo()}})
 		game.onTick(25, "Si gscCounter es 0 desactivar codigo", {if (gscCounter == 0) {self.bloquearCodigo()} else {}})
 	}
 	
 	method bloquearCodigo(){
-		resuelto = false
-		ultimoColisionador = objetoGenerico
+		activado = false
 		image = "codigo_no_resuelto.png"
 	}
 }
 
 class Caja inherits ObjetoMovible{
 	override method esCaja() = true
+	override method puedePisarse() = false
 	
 	method image() = "caja.png"
 }
 
 class Placa inherits Objeto{
 	var property image = "placaRoja.png"
-	var property activada = false;
+	var property activado = false;
 	var property ultimoColisionador = personajeInteligente
-	
-	override method puedePisarse() = true
 	
 	method configuracionInicial(){
 		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca})
-		game.onTick(25, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activarPlaca()} else {self.desactivarPlaca()}})
+		game.onTick(25, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
 	}
 	
 	 
-	method activarPlaca(){
+	method activar(){
 		image = "placaVerde.png"
-		activada = true
+		activado = true
 	}
 	
-	method desactivarPlaca(){
+	method desactivar(){
 		image = "placaRoja.png"
-		activada = false
+		activado = false
 	}	
 }
 
 class Pared inherits Objeto{
-	var property image = "pared.jpg"
+	method image() = "pared.jpg"
+	override method puedePisarse() = false
 }
 
 
@@ -144,8 +129,6 @@ class Puerta inherits Objeto{
 }
 
 class Pinche inherits Objeto{
-	override method puedePisarse() = true
-	
 	method image() = "Pinches.png"
 	
 	override method colisionarConPersonaje(personaje){
@@ -155,8 +138,6 @@ class Pinche inherits Objeto{
 
 class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
 	var property image
-
-	override method puedePisarse() = true
 	
 	override method colisionarConPersonaje(personaje){
 		game.say(personaje,"Pasé de nivel!")

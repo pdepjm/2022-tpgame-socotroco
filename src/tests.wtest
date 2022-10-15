@@ -25,7 +25,7 @@ describe "Piramide De Maslow" {
 		game.clear()
 		game.addVisual(personajeFuerte)
 		personajeFuerte.position(game.at(3, 5))
-		const pared = new Pared(position = game.at(3, 4), image = "pared.png")
+		const pared = new Pared(position = game.at(3, 4))
 		game.addVisual(pared)
 		personajeFuerte.moverA(abajo)
 		assert.equals(personajeFuerte.position(), game.at(3,5)) 
@@ -47,7 +47,7 @@ describe "Piramide De Maslow" {
 	test "Si el personaje esta en la misma posicion que la placa esta se activa"
 	{
 		game.clear()
-		const placa = new Placa(position = game.at(3,3), image = "placaRoja.png", ultimoColisionador = objetoGenerico, puedePisarse = true)
+		const placa = new Placa(position = game.at(3,3), image = "placaRoja.png", puedePisarse = true)
 		game.addVisual(placa)
 		placa.configuracionInicial()
 		personajeInteligente.position(game.at(3,2))	
