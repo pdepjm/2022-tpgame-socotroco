@@ -23,13 +23,11 @@ object cfg{
 		game.addVisual(personajeInteligente)
 	}
 	
-	// Config personajes
 	method configurarTeclas() {
 		keyboard.w().onPressDo({personajeFuerte.moverA(arriba)})
 		keyboard.s().onPressDo({personajeFuerte.moverA(abajo)})
 		keyboard.a().onPressDo({personajeFuerte.moverA(izquierda)})
 		keyboard.d().onPressDo({personajeFuerte.moverA(derecha)})
-		
 		
 		keyboard.up().onPressDo({personajeInteligente.moverA(arriba)})
 		keyboard.down().onPressDo({personajeInteligente.moverA(abajo)})
@@ -37,7 +35,6 @@ object cfg{
 		keyboard.right().onPressDo({personajeInteligente.moverA(derecha)})
 	}
 
-	// Config Personajes
 	method configurarColisiones(){
 		game.onCollideDo(personajeFuerte, {objeto => objeto.colisionarConPersonaje(personajeFuerte)})
 		game.onCollideDo(personajeInteligente, {objeto => objeto.colisionarConPersonaje(personajeInteligente)})

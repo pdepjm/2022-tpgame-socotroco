@@ -12,7 +12,7 @@ describe "Piramide De Maslow" {
 	test "Si el personaje fuerte interactua con la caja esta se mueve una posicion"
 	{
 		game.clear()
-		const caja1 = new Caja(position = game.at(4, 5), puedePisarse = false)
+		const caja1 = new Caja(position = game.at(4, 5))
 		game.addVisual(caja1)
 		game.addVisual(personajeFuerte)
 		personajeFuerte.position(game.at(3, 5))
@@ -25,7 +25,7 @@ describe "Piramide De Maslow" {
 		game.clear()
 		game.addVisual(personajeFuerte)
 		personajeFuerte.position(game.at(3, 5))
-		const pared = new Pared(position = game.at(3, 4), image = "pared.png", puedePisarse = false)
+		const pared = new Pared(position = game.at(3, 4), image = "pared.png")
 		game.addVisual(pared)
 		personajeFuerte.moverA(abajo)
 		assert.equals(personajeFuerte.position(), game.at(3,5)) 
@@ -37,7 +37,7 @@ describe "Piramide De Maslow" {
 		game.clear()
 		game.addVisual(personajeInteligente)
 		personajeInteligente.position(game.at(4,5))
-		const caja = new Caja(position = game.at(5, 5), puedePisarse = false)
+		const caja = new Caja(position = game.at(5, 5))
 		game.addVisual(caja)
 		personajeInteligente.moverA(derecha)
 		assert.equals(game.at(4, 5), personajeInteligente.position())
@@ -47,7 +47,7 @@ describe "Piramide De Maslow" {
 	test "Si el personaje esta en la misma posicion que la placa esta se activa"
 	{
 		game.clear()
-		const placa = new Placa(position = game.at(3,3), image = "placaRoja.png", activada = false, ultimoColisionador = objetoGenerico, puedePisarse = true)
+		const placa = new Placa(position = game.at(3,3), image = "placaRoja.png", ultimoColisionador = objetoGenerico, puedePisarse = true)
 		game.addVisual(placa)
 		placa.configuracionInicial()
 		personajeInteligente.position(game.at(3,2))	
@@ -59,7 +59,7 @@ describe "Piramide De Maslow" {
 	test "Si el personaje llega al pancho pasa al siguiente nivel"
 	{
 		game.clear()
-		const pancho = new Pancho(image = "pancho.png", position = game.at(3,3), puedePisarse = true)
+		const pancho = new ObjetoGanador(image = "pancho.png", position = game.at(3,3), puedePisarse = true)
 		game.addVisual(pancho)
 		personajeInteligente.position(game.at(3,2))
 		game.addVisual(personajeInteligente)
