@@ -25,7 +25,7 @@ class ObjetoMovible inherits Objeto{
 }
 
 class Personaje inherits ObjetoMovible{
-	method pincharse() = self.morir()
+	method pincharse(){gestorNiveles.perderVida()}
 	method morir() = game.stop()
 }
 
@@ -46,7 +46,7 @@ class PersonajeFuerte inherits Personaje{
 class PersonajeInteligente inherits Personaje{
 	method image() = "SeñorPepino.png"
 	
-	override method pincharse() = if (game.getObjectsIn(position).any({objeto => objeto.esCaja()})) {} else {super()}
+	override method pincharse() {if (game.getObjectsIn(position).any({objeto => objeto.esCaja()})) {} else {super()}}
 }
 
 const personajeFuerte = new PersonajeFuerte()
@@ -144,3 +144,18 @@ class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
 		game.schedule(3000, { gestorNiveles.cargarSiguienteNivel()})
 	}
 }
+
+class BarraDeVidas inherits Objeto{
+	var property vidas
+	
+	method image() = "vidas-" + self.vidas().toString() + "corazon.png"
+	
+	method perderCorazon(){
+		if(vidas == 1)
+		{
+			game.stop()}else{
+				vidas -= 1
+		}
+	} 
+}
+

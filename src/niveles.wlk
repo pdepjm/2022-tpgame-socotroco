@@ -2,8 +2,16 @@ import wollok.game.*
 import main.*
 import configuracion.*
 
+const barraDeVidas = new BarraDeVidas(position = game.at(10,0),vidas=3)
+
 object gestorNiveles{
 	var property nivelActual = nivel1
+	var property vidas = 3
+	
+	method perderVida(){
+		nivelActual.reiniciarse()
+		barraDeVidas.perderCorazon()	
+	}
 	
 	method cargarSiguienteNivel(){
 		nivelActual = nivelActual.siguienteNivel()
@@ -26,6 +34,11 @@ class Nivel{
 	var property posInicialFuerte
 	var property posInicialInteligente
 	
+	method reiniciarse(){
+		game.clear()
+		self.configuracionInicial()
+	}
+	
 	method configuracionInicial(){
 		self.cargarEscenario()
 		game.onTick(50,"verificar abrir puerta", {if (self.requisitosCumplidos()) {puerta.abrir()} else {puerta.cerrar()}})
@@ -34,6 +47,7 @@ class Nivel{
 	method cargarEscenario(){
 		cfg.configurarPersonajes()
 		self.crearYConfigurarObjetos()
+		game.addVisual(barraDeVidas)
 	}
 	
 	method crearYConfigurarObjetos(){
