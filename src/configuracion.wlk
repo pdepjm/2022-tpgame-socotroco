@@ -1,6 +1,7 @@
 import wollok.game.*
 import main.*
 import direcciones.*
+import niveles.*
 
 object cfg{
 	method configurarPantalla() {
@@ -28,6 +29,7 @@ object cfg{
 		keyboard.s().onPressDo({personajeFuerte.moverA(abajo)})
 		keyboard.a().onPressDo({personajeFuerte.moverA(izquierda)})
 		keyboard.d().onPressDo({personajeFuerte.moverA(derecha)})
+		keyboard.r().onPressDo({gestorNiveles.nivelActual().reiniciarse()})
 		
 		keyboard.up().onPressDo({personajeInteligente.moverA(arriba)})
 		keyboard.down().onPressDo({personajeInteligente.moverA(abajo)})
