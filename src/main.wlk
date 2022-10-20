@@ -5,7 +5,7 @@ class Objeto{
 	var property position = null
 	var property puedePisarse = true
 	
-	method crear() = game.addVisual(self)
+	method crear(){game.addVisual(self)}
 	
 	method moverA(_){}
 	method colisionarConPersonaje(_){}
@@ -80,6 +80,12 @@ class Codigo inherits Objeto{
 }
 
 class Caja inherits ObjetoMovible{
+	var property posicionInicial
+	
+	override method crear(){
+		self.position(posicionInicial)
+		game.addVisual(self)
+	}
 	override method esCaja() = true
 	override method puedePisarse() = false
 	

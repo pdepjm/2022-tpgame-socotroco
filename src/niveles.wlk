@@ -83,7 +83,7 @@ const nivel1 = new Nivel(
 	 
 	 puerta = new Puerta(position = game.at(9,7)),
 	 
-	 cajas = [new Caja(position = game.at(8,5))],
+	 cajas = [new Caja(posicionInicial = game.at(8,5), position = game.at(8,5))],
 	 
 	 objetoGanador = new ObjetoGanador(position = game.at(9,9), image = "pancho.png"),
 	 
