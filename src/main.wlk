@@ -59,6 +59,11 @@ class Codigo inherits Objeto{
 	
 	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo
 	
+	override method crear(){
+		self.bloquearCodigo()
+		game.addVisual(self)
+	}
+	
 	method resolverCodigo(){
 		activado = true
 		image = "codigo.png"

@@ -101,7 +101,7 @@ const nivel2 = new Nivel(
 	 	new Pared(position = game.at(10,12))],
 	 placas = [new Placa(position = game.at(0,0)), new Placa(position = game.at(1,1))],
 	 puerta = new Puerta(position = game.at(15,0)),
-	 cajas = [new Caja(position = game.at(5,5))],
+	 cajas = [new Caja(posicionInicial = game.at(5,5) , position = game.at(5,5))],
 	 codigos = [new Codigo(position = game.at(2,2))],
 	 objetoGanador = new ObjetoGanador(position = game.at(10,9), image = "botellaAgua.png"),
 	 pinches = [new Pinche(position = game.at(8,3))],
