@@ -142,9 +142,15 @@ class Puerta inherits Objeto{
 class Pinche inherits Objeto{
 	method image() = "Pinches.png"
 	
+	method pincharA(personaje){personaje.pincharse()} 
 	override method colisionarConPersonaje(personaje){
-		personaje.pincharse()
+		self.pincharA(personaje)
 	}
+}
+
+class SuperPinche inherits Pinche{
+	override method image() = "Pinches.png" //Aca debe ir una imagen de pinches distintos
+	override method pincharA(personaje){2.times{ _ => personaje.pincharse()}}
 }
 
 class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2

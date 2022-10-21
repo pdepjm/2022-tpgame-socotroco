@@ -87,7 +87,7 @@ const nivel1 = new Nivel(
 	 
 	 objetoGanador = new ObjetoGanador(position = game.at(9,9), image = "pancho.png"),
 	 
-	 pinches = [new Pinche(position = game.at(8,3))],
+	 pinches = [new Pinche(position = game.at(8,3)), new SuperPinche(position = game.at(8,4))],
 	 
 	 posInicialFuerte = game.center().left(1),
 	 posInicialInteligente = game.center().right(1)
