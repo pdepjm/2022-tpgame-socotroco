@@ -25,6 +25,7 @@ class ObjetoMovible inherits Objeto{
 }
 
 class Personaje inherits ObjetoMovible{
+	
 	method pincharse(){gestorNiveles.perderVida()}
 	method morir() = game.stop()
 }
@@ -57,7 +58,7 @@ class Codigo inherits Objeto{
 	var property activado = false
 	var property image = "codigo_no_resuelto.png"
 	
-	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo
+	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo 1
 	
 	override method crear(){
 		self.bloquearCodigo()
@@ -68,12 +69,13 @@ class Codigo inherits Objeto{
 		activado = true
 		image = "codigo.png"
 		gscCounter += 1
-		game.schedule(5000, {gscCounter -= 1})
+		game.schedule(4000, {gscCounter -= 1})
 	}
 	
 	method image() = image
 	
 	method configuracionInicial(){
+		gscCounter = 0
 		game.onTick(25, "Desbloquear código", {if(personajeInteligente.position() == self.position()) {self.resolverCodigo()}})
 		game.onTick(25, "Si gscCounter es 0 desactivar codigo", {if (gscCounter == 0) {self.bloquearCodigo()} else {}})
 	}
@@ -153,6 +155,8 @@ class SuperPinche inherits Pinche{
 	override method pincharA(personaje){2.times{ _ => personaje.pincharse()}}
 }
 
+
+
 class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
 	var property image
 	
@@ -176,3 +180,55 @@ class BarraDeVidas inherits Objeto{
 	} 
 }
 
+object bordes {
+const paredes= [
+	new Pared(position = game.at(0,9)),
+	new Pared(position = game.at(1,9)),
+	new Pared(position = game.at(0,-1)),
+	new Pared(position = game.at(1,-1)),
+	new Pared(position = game.at(2,-1)),
+	new Pared(position = game.at(3,-1)),
+	new Pared(position = game.at(4,-1)),
+	new Pared(position = game.at(5,-1)),
+	new Pared(position = game.at(6,-1)),
+	new Pared(position = game.at(7,-1)),
+	new Pared(position = game.at(8,-1)),
+	new Pared(position = game.at(9,-1)),
+	new Pared(position = game.at(10,-1)),
+	new Pared(position = game.at(0,10)),
+	new Pared(position = game.at(1,10)),
+	new Pared(position = game.at(2,10)),
+	new Pared(position = game.at(3,10)),
+	new Pared(position = game.at(4,10)),
+	new Pared(position = game.at(5,10)),
+	new Pared(position = game.at(6,10)),
+	new Pared(position = game.at(7,10)),
+	new Pared(position = game.at(8,10)),
+	new Pared(position = game.at(9,10)),
+	new Pared(position = game.at(10,10)),
+	new Pared(position = game.at(-1,0)),
+	new Pared(position = game.at(-1,1)),
+	new Pared(position = game.at(-1,2)),
+	new Pared(position = game.at(-1,3)),
+	new Pared(position = game.at(-1,4)),
+	new Pared(position = game.at(-1,5)),
+	new Pared(position = game.at(-1,6)),
+	new Pared(position = game.at(-1,7)),
+	new Pared(position = game.at(-1,8)),
+	new Pared(position = game.at(-1,9)),
+	new Pared(position = game.at(10,0)),
+	new Pared(position = game.at(10,1)),
+	new Pared(position = game.at(10,2)),
+	new Pared(position = game.at(10,3)),
+	new Pared(position = game.at(10,4)),
+	new Pared(position = game.at(10,5)),
+	new Pared(position = game.at(10,6)),
+	new Pared(position = game.at(10,7)),
+	new Pared(position = game.at(10,8)),
+	new Pared(position = game.at(10,9))
+	]
+	
+	method crear(){
+		paredes.forEach({pared => game.addVisual(pared)})
+	} 
+}
