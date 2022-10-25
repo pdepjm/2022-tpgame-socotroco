@@ -6,7 +6,7 @@ import niveles.*
 object cfg{
 	method configurarPantalla() {
 		game.title("Piramide de Maslow")
-		game.width(11)
+		game.width(10)
 		game.height(10)
 		game.cellSize(64)
 		game.boardGround("fondoGris.jpg")
