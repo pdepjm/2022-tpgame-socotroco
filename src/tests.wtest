@@ -4,6 +4,11 @@ import direcciones.*
 import juego.*
 import main.*
 import niveles.*
+import nivel1.*
+import nivel2.*
+import nivel3.*
+import nivel4.*
+import nivel5.*
 
 describe "Piramide De Maslow" {
 	
@@ -13,7 +18,9 @@ describe "Piramide De Maslow" {
 		personajeFuerte.position(game.at(2, 5))
 		personajeFuerte.moverA(arriba)
 		assert.that(personajeFuerte.position() == game.at(2,5))
+		
 	}
+	
 	
 	test "Si el personaje se mueve hacia abajo, no puede porque hay una pared"
 	{
