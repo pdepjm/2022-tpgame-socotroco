@@ -27,7 +27,7 @@ const nivel1 = new Nivel(
 	 
 	 cajas = [new Caja(posicionInicial = game.at(2,6), position = game.at(2,6))],
 	 
-	 objetoGanador = new ObjetoGanador(position = game.at(4,0), image = "comida.png"), // ESTABA EN (8,0)
+	 objetoGanador = new ObjetoGanador(position = game.at(8,0), image = "comida.png"), 
 	 
 	 pinches = [
 	 	new Pinche(position = game.at(6,9)),
