@@ -167,7 +167,7 @@ class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
 		if(!gestorNiveles.ultimoNivel()){
 			game.say(personaje,"Pasé de nivel!")
 			gestorNiveles.nivelActualNumero(gestorNiveles.nivelActualNumero()+1)
-			game.schedule(1500, { gestorNiveles.cargarSiguienteNivel()})
+			gestorNiveles.cargarSiguienteNivel()
 		}
 		else{
 			juego.ganarJuego()
