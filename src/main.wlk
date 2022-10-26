@@ -85,6 +85,12 @@ class Codigo inherits Objeto{
 		activado = false
 		image = "codigo_no_resuelto.png"
 	}
+	
+	override method colisionarConPersonaje(personaje){
+		if(personaje == personajeInteligente){
+			self.activado(true)
+		}
+	}
 }
 
 class Caja inherits ObjetoMovible{
