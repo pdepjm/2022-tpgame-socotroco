@@ -10,9 +10,9 @@ describe "Piramide De Maslow" {
 	test "Si el personaje fuerte interactua con la caja, éste se mantiene en su posición"
 	{
 		nivel1.reiniciarse()
-		personajeFuerte.position(game.at(7, 5))
-		personajeFuerte.moverA(derecha)
-		assert.that(personajeFuerte.position() == game.at(7,5))
+		personajeFuerte.position(game.at(2, 5))
+		personajeFuerte.moverA(arriba)
+		assert.that(personajeFuerte.position() == game.at(2,5))
 	}
 	
 	test "Si el personaje se mueve hacia abajo, no puede porque hay una pared"
@@ -35,22 +35,19 @@ describe "Piramide De Maslow" {
 		assert.throwsException({personajeInteligente.moverA(arriba)})
 	}
 	 
-	test "Si el personaje esta en la misma posicion que la placa esta se activa"
+	test "Si el personaje esta en la misma posicion que la placa, ésta se activa"
 	{
 		nivel1.reiniciarse()
-		const placa = new Placa(position = game.at(1,3), image = "placaRoja.png", puedePisarse = true)
-		game.addVisual(placa)
-		placa.configuracionInicial()
-		personajeFuerte.moverA(arriba)
-		assert.that(placa.activado())//No funciona por cuestión de schedule o tick
+		personajeInteligente.position(game.at(8,4))
+		personajeInteligente.moverA(derecha)
+		personajeFuerte.position(game.at(7,9))
+		assert.that(nivel1.placas().all{placa => placa.activado()})
 	}
 	
 	test "Si un personaje pisa los pinches pierde una vida"
 	{
 		nivel1.reiniciarse()
-		const pinche = new Pinche()
-		pinche.position(game.at(1,3))
-		game.addVisual(pinche)
+		personajeFuerte.position(game.at(7,7))
 		personajeFuerte.moverA(arriba)
 		assert.equals(gestorNiveles.vidas(),2)
 	}
@@ -58,7 +55,11 @@ describe "Piramide De Maslow" {
 	test "Si un personaje pisa los superpinches pierde dos vidas"
 	{
 		nivel1.reiniciarse()
-		personajeFuerte.position(game.at(8,4))
+		const pinche = new SuperPinche()
+		game.addVisual(pinche)
+		pinche.position(game.at(7,6))
+		personajeFuerte.position(game.at(7,5))
+		personajeFuerte.moverA(arriba)
 		assert.equals(gestorNiveles.vidas(),1)
 	}
 

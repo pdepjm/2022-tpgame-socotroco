@@ -100,7 +100,7 @@ const nivel1 = new Nivel(
 	 
 	 cajas = [new Caja(posicionInicial = game.at(2,6), position = game.at(2,6))],
 	 
-	 objetoGanador = new ObjetoGanador(position = game.at(9,0), image = "pancho.png"),
+	 objetoGanador = new ObjetoGanador(position = game.at(8,0), image = "comida.png"),
 	 
 	 pinches = [
 	 	new Pinche(position = game.at(6,9)),
@@ -138,7 +138,7 @@ const nivel2 = new Nivel(
 	 
 	 cajas = [new Caja(posicionInicial = game.at(3,6), position = game.at(3,6)), new Caja(posicionInicial = game.at(6,8), position = game.at(6,8))],
 	 
-	 objetoGanador = new ObjetoGanador(position = game.at(9,0), image = "pancho.png"),
+	 objetoGanador = new ObjetoGanador(position = game.at(8,0), image = "familia.png"),
 	 
 	 pinches = [
 	 	new Pinche(position = game.at(1,7)),
@@ -199,7 +199,7 @@ const nivel3 = new Nivel(
 	 	new Caja(posicionInicial = game.at(7,1), position = game.at(7,1))
 	 ],
 
-	 objetoGanador = new ObjetoGanador(position = game.at(0,0), image = "pancho.png"),
+	 objetoGanador = new ObjetoGanador(position = game.at(0,0), image = "amigos.png"),
 	 
 	 pinches = [
 	 	new Pinche(position = game.at(3,0)),
@@ -260,7 +260,7 @@ const nivel4 = new Nivel(
 	 	new Caja(posicionInicial = game.at(7,1), position = game.at(7,1))
 	 ],
 	 
-	 objetoGanador = new ObjetoGanador(position = game.at(9,9), image = "pancho.png"),
+	 objetoGanador = new ObjetoGanador(position = game.at(9,9), image = "dinero.png"),
 	 
 	 pinches = [
 	 	new Pinche(position = game.at(2,3)),
@@ -323,7 +323,7 @@ const nivel5 = new Nivel(
 	 	new Caja(posicionInicial = game.at(7,4), position = game.at(7,4))
 	 ],
 	 
-	 objetoGanador = new ObjetoGanador(position = game.at(9,0), image = "pancho.png"),
+	 objetoGanador = new ObjetoGanador(position = game.at(9,0), image = "nota.png"),
 	 
 	 pinches = [
 	 	new Pinche(position = game.at(2,9)),
