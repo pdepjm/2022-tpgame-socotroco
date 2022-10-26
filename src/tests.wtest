@@ -52,8 +52,10 @@ describe "Piramide De Maslow" {
 	test "Si un personaje pisa los pinches pierde una vida"
 	{
 		nivel1.reiniciarse()
-		personajeFuerte.position(game.at(7,7))
-		personajeFuerte.moverA(arriba)
+		const pinche = new Pinche()
+		pinche.position(game.at(7,5))
+		game.addVisual(pinche)
+		pinche.colisionarConPersonaje(personajeInteligente)
 		assert.equals(gestorNiveles.vidas(),2)
 	}
 	
@@ -62,9 +64,8 @@ describe "Piramide De Maslow" {
 		nivel1.reiniciarse()
 		const pinche = new SuperPinche()
 		game.addVisual(pinche)
-		pinche.position(game.at(7,6))
-		personajeFuerte.position(game.at(7,5))
-		personajeFuerte.moverA(arriba)
+		pinche.position(game.at(7,5))
+		pinche.colisionarConPersonaje(personajeInteligente)
 		assert.equals(gestorNiveles.vidas(),1)
 	}
 	
