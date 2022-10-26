@@ -32,7 +32,7 @@ class Personaje inherits ObjetoMovible{
 }
 
 class PersonajeFuerte inherits Personaje{
-	method image() = "orc.png"
+	method image() = "personajeFuerte.png"
 	
 	override method moverA(dir){
 		if (self.puedeMoverseA(dir)){
@@ -46,7 +46,7 @@ class PersonajeFuerte inherits Personaje{
 }
 
 class PersonajeInteligente inherits Personaje{
-	method image() = "SeñorPepino.png"
+	method image() = "personajeInteligente.png"
 	
 	override method pincharseCon(algo) {if (game.getObjectsIn(position).any({objeto => objeto.esCaja()})) {} else {super(algo)}}
 }
@@ -155,7 +155,7 @@ class Pinche inherits Objeto{
 class SuperPinche inherits Pinche{
 	override method danio() = 2
 	
-	override method image() = "Pinches.png" //Aca debe ir una imagen de pinches distintos
+	override method image() = "superPinches.png" //Aca debe ir una imagen de pinches distintos
 }
 
 
@@ -174,13 +174,7 @@ class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
 	}
 }
 
-class BarraDeVidas inherits Objeto{
-	method image() = "vidas-" + gestorNiveles.vidas().toString() + "corazon.png"
-}
 
-class Piramide inherits Objeto{
-	method image() = "nivel" + gestorNiveles.nivelActualNumero().toString() + ".png"
-}
 
 object bordes {
 const paredes= [
@@ -235,9 +229,20 @@ const paredes= [
 	} 
 }
 
-
-class ImagenGanadoraFinal inherits Objeto{
-	method image() = "imagenGanadora.png"
+class BarraDeVidas inherits Objeto{
+	method image() = "vidas-" + gestorNiveles.vidas().toString() + "corazon.png"
 }
 
-const imagenGanadora = new ImagenGanadoraFinal(position = game.at(2,5))
+class Piramide inherits Objeto{
+	method image() = "nivel" + gestorNiveles.nivelActualNumero().toString() + ".png"
+}
+
+class Visual {
+	var property image
+	var property position = game.origin()
+}
+
+const imagenGanadora = new Visual(
+	image = "imagenGanadora.png",
+	position = game.at(0,0)
+)
