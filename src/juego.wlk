@@ -12,9 +12,9 @@ object juego {
 	}
 	
 	method ganarJuego(){
-		// Mostrar en pantalla imagen ganadora
-		imagenGanadora.crear()
-		//game.schedule(5000,{game.stop()})
+		game.clear()
+		game.addVisual(imagenGanadora)
+		game.schedule(5000,{game.stop()})
 	}
 	
 }

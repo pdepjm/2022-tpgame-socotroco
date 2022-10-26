@@ -5,9 +5,8 @@ import nivel1.*
 import nivel5.*
 import juego.*
 
-
-const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
 const piramide = new Piramide(position = game.at(1,9))
+const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
 
 object gestorNiveles{
 	var property nivelActualNumero = 1
