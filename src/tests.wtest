@@ -18,9 +18,7 @@ describe "Piramide De Maslow" {
 		personajeFuerte.position(game.at(2, 5))
 		personajeFuerte.moverA(arriba)
 		assert.that(personajeFuerte.position() == game.at(2,5))
-		
 	}
-	
 	
 	test "Si el personaje se mueve hacia abajo, no puede porque hay una pared"
 	{
@@ -69,15 +67,18 @@ describe "Piramide De Maslow" {
 		personajeFuerte.moverA(arriba)
 		assert.equals(gestorNiveles.vidas(),1)
 	}
-
-	test "Si el personaje llega al pancho pasa al siguiente nivel"
+	
+	test "Si se pierden todas las vidas, el juego finaliza"
 	{
-		game.clear()
-		const pancho = new ObjetoGanador(image = "pancho.png", position = game.at(3,3), puedePisarse = true)
-		game.addVisual(pancho)
-		personajeInteligente.position(game.at(3,2))
-		game.addVisual(personajeInteligente)
-		personajeInteligente.moverA(arriba)
-		game.schedule(3100, {assert.that(gestorNiveles.nivelActual() == "nivel2")})//No funciona por cuestión de schedule o tick
+		gestorNiveles.perderVida()
+		gestorNiveles.perderVida()
+		assert.throwsException({gestorNiveles.perderVida()})
+	}
+
+	test "Si el personaje llega a la comida pasa al siguiente nivel"
+	{
+		nivel1.reiniciarse()
+		nivel1.objetoGanador().colisionarConPersonaje(personajeInteligente)
+		assert.that(gestorNiveles.nivelActualNumero() == 2)
 	}
 }

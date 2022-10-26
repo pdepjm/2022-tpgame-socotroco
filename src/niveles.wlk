@@ -25,7 +25,7 @@ object gestorNiveles{
 	
 	method cargarSiguienteNivel(){
 			nivelActual = nivelActual.siguienteNivel()
-			nivelActualNumero++
+			
 			game.clear()
 			nivelActual.configuracionInicial()
 	}

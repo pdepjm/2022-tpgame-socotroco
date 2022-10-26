@@ -166,6 +166,7 @@ class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
 	override method colisionarConPersonaje(personaje){
 		if(!gestorNiveles.ultimoNivel()){
 			game.say(personaje,"Pasé de nivel!")
+			gestorNiveles.nivelActualNumero(gestorNiveles.nivelActualNumero()+1)
 			game.schedule(1500, { gestorNiveles.cargarSiguienteNivel()})
 		}
 		else{
