@@ -160,7 +160,7 @@ const nivel2 = new Nivel(
 
 
 const nivel3 = new Nivel(
-	 siguienteNivel = nivel5,
+	 siguienteNivel = nivel4,
 		
 	 paredes = [
 	 	new Pared(position = game.at(2,4)),
