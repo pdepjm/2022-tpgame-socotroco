@@ -1,5 +1,7 @@
 import wollok.game.*
 import niveles.*
+import juego.*
+import direcciones.*
 
 class Objeto{
 	var property position = null
@@ -105,7 +107,7 @@ class Placa inherits Objeto{
 	var property ultimoColisionador = personajeInteligente
 	
 	method configuracionInicial(){
-		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca})
+		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca; self.activar()})
 		game.onTick(25, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
 	}
 	
@@ -118,7 +120,7 @@ class Placa inherits Objeto{
 	method desactivar(){
 		image = "placaRoja.png"
 		activado = false
-	}	
+	}
 }
 
 class Pared inherits Objeto{
