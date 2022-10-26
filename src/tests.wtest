@@ -12,12 +12,20 @@ import nivel5.*
 
 describe "Piramide De Maslow" {
 	
-	test "Si el personaje fuerte interactua con la caja, éste se mantiene en su posición"
+	test "Si un personaje choca con la caja, éste se mantiene en su posición"
 	{
 		nivel1.reiniciarse()
 		personajeFuerte.position(game.at(2, 5))
 		personajeFuerte.moverA(arriba)
 		assert.that(personajeFuerte.position() == game.at(2,5))
+	}
+	
+	test "Si el personaje fuerte choca con la caja, la misma es desplazada en la dirección en que se movió el personaje"
+	{
+		nivel1.reiniciarse()
+		personajeFuerte.position(game.at(2,5))
+		personajeFuerte.moverA(arriba)
+		assert.that(nivel1.cajas().all{caja => caja.position() == game.at(2,7)})
 	}
 	
 	test "Si el personaje se mueve hacia abajo, no puede porque hay una pared"
@@ -34,19 +42,38 @@ describe "Piramide De Maslow" {
 	test "El personaje inteligente no puede mover la caja"
 	{
 		nivel1.reiniciarse()
-		personajeInteligente.position(game.at(5,4))
-		const caja = new Caja(posicionInicial = game.at(5, 5))
-		game.addVisual(caja)
-		assert.throwsException({personajeInteligente.moverA(arriba)})
+		personajeInteligente.position(game.at(2,5))
+		personajeInteligente.moverA(arriba)
+		assert.that(nivel1.cajas().all{caja => caja.position() == game.at(2,6)})
 	}
 	 
 	test "Si el personaje esta en la misma posicion que la placa, ésta se activa"
 	{
 		nivel1.reiniciarse()
-		personajeInteligente.position(game.at(8,4))
-		personajeInteligente.moverA(derecha)
-		personajeFuerte.position(game.at(7,9))
-		assert.that(nivel1.placas().all{placa => placa.activado()})
+		const placa = new Placa()
+		game.addVisual(placa)
+		placa.colisionarConPersonaje(personajeInteligente)
+		assert.that(placa.activado())
+	}
+	
+	test "Si el personaje inteligente se para sobre el código, éste se desbloquea"
+	{
+		nivel1.reiniciarse()
+		const codigo = new Codigo()
+		codigo.crear()
+		codigo.configuracionInicial()
+		codigo.colisionarConPersonaje(personajeInteligente)
+		assert.that(codigo.activado())
+	}
+	
+	test "Si el personaje fuerte se para sobre el código, éste no se desbloquea"
+	{
+		nivel1.reiniciarse()
+		const codigo = new Codigo()
+		codigo.crear()
+		codigo.configuracionInicial()
+		codigo.colisionarConPersonaje(personajeFuerte)
+		assert.that(!codigo.activado())
 	}
 	
 	test "Si un personaje pisa los pinches pierde una vida"
