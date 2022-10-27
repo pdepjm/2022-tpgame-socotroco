@@ -32,7 +32,7 @@ class Personaje inherits ObjetoMovible{
 }
 
 class PersonajeFuerte inherits Personaje{
-	method image() = "personajeFuerte.png"
+	method image() = "forzudo.png"
 	
 	override method moverA(dir){
 		if (self.puedeMoverseA(dir)){
@@ -46,7 +46,7 @@ class PersonajeFuerte inherits Personaje{
 }
 
 class PersonajeInteligente inherits Personaje{
-	method image() = "personajeInteligente.png"
+	method image() = "cerebro.png"
 	
 	override method pincharseCon(algo) {if (game.getObjectsIn(position).any({objeto => objeto.esCaja()})) {} else {super(algo)}}
 }
