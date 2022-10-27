@@ -14,9 +14,9 @@
 
 ## Reglas de Juego / Instrucciones
 
-El juego consiste en hacer llegar a dos personajes, uno fuerte y otro inteligente, a uno de los objetos (un pancho) que les permitirá satisfacer el primer nivel de necesidades de la pirámide de Maslow. Para ello deben trabajar en conjunto y logrear abrir la puerta que los dirige hacia ese objetivo, debiendo pasar por diversos obstáculos. Al perder las 3 vidas que tienen, termina el juego. 
+El juego consiste en hacer llegar a dos personajes, uno fuerte y otro inteligente, a uno de los objetos que les permitirá satisfacer las distintas necesidades de la pirámide de Maslow. Para ello deben trabajar en conjunto y lograr abrir la puerta que los dirige hacia el objetivo, debiendo pasar por diversos obstáculos. Al perder las 3 vidas que tienen, termina el juego. 
 - Las *paredes* no pueden ser atravesadas por ningún personaje.
-- Los *pinches* le quitan una vida a cualquiera que pise sobre ellos. También hay *super pinches* que quitan de a dos vidas.
+- Los *pinches* le quitan una vida a cualquiera que pise sobre ellos. También hay *super pinches* que quitan dos vidas.
 
 El *personaje inteligente* puede activar *códigos*, los cuales se activan únicamente por 4 segundos. Su movimiento se ve determinado por las flechas del tecado (←↑→↓).
 El *personaje fuerte* puede mover *cajas*, las cuales pueden posicionarse sobre placas y ser utilizadas para permitirle al personaje inteligente pasar por pinches. Para moverse, este utiliza las teclas WASD.
