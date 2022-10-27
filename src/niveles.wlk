@@ -5,9 +5,6 @@ import nivel1.*
 import nivel5.*
 import juego.*
 
-const piramide = new Piramide(position = game.at(1,9))
-const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
-
 object gestorNiveles{
 	var property nivelActualNumero = 1
 	var property nivelActual = nivel1
@@ -24,6 +21,7 @@ object gestorNiveles{
 	
 	method cargarSiguienteNivel(){
 			nivelActual = nivelActual.siguienteNivel()
+			vidas = 3
 			
 			game.clear()
 			nivelActual.configuracionInicial()
@@ -60,7 +58,7 @@ class Nivel{
 	}
 	
 	method crearYConfigurarObjetos(){
-		self.crearTodos(paredes + codigos + pinches + placas + [puerta] + [objetoGanador] + [bordes] + [barraDeVidas] + [piramide])
+		self.crearTodos(paredes + codigos + pinches + placas + [puerta] + [objetoGanador] + [bordes])
 		self.configurarTodos(placas + codigos)
 		
 		personajeInteligente.position(posInicialInteligente)

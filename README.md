@@ -29,13 +29,16 @@ Para poder abrir la puerta:
 
 **Polimorfismo: ¿Cuáles son los mensajes polimórficos? ¿Qué objetos lo implementan? ¿Qué objeto se aprovecha de ello?**
 
-El mensaje “colisionarConPersonaje()” es polimórfico ya que es entendido por cualquier subclase de la clase Objeto. Es implementado por todos los objetos al colisionar con el personaje, como los que pertenecen a las clases “placa”, “puerta”, “caja” y “pared”, así como el objeto "objetoGanador".
+| Mensaje polimorórfico | Objetos que lo implementan | Objeto que se aprovecha |
+| --- | ----------- | --- |
+| siguientePosicion(pos) | izquierda - derecha - abajo - arriba | clase ObjetoMovible |
+| crear() | clase Objeto - bordes | clase Nivel |
+| configuracionInicial() | clase Placa - clase Código| clase Nivel |
+| moverA(dir) | clase Objeto | clase PersonajeFuerte |
+| esCaja() | clase Objeto | clase PersonajeInteligente|
+| activado() | clase Placa - clase Codigo | clase Nivel|
+| danio() | clase Pinche (y SuperPinche)| clase Personaje |
 
-También hay polimorfismo en el método "moverA(dirección)". No solamente los personajes entienden el mensaje "moverA()", sino que este se beneficia ya que los objetos con los que puede colisionar entienden el mensaje. De esta forma, los personajes le pueden enviar este mensaje al objeto de la posición a la que quieren moverse (en caso de haber un objeto en esa dirección y no poder ellos ocupar ese lugar) y este puede moverse o no dependiendo de si es una pared o una caja. El personaje implementa unicamente su método "moverA(dirección)", sin importarle cómo lo implementan los objetos con los que puede colisionar, solamente les envía el mesaje.
-
-Los niveles también se aprovechan del polimorfismo de los objetos con los que pueden colisionar los personajes, ya que para poder insertarlos en la configuración inicial del nivel, primero hay que crearlos. Para ello crea una lista de paredes, códigos, placas, cajas y pinches (una lista para cada clase de objeto), así como referencias al objeto ganador y a la puerta, y les envía a todos (con el método forEach) el mensaje "crear()". Es decir que le delega la responsabilidad a cada objeto de crearse a sí mismo.
-
-Otro objeto con polimorfismo son los pinches. Tanto los pinches como su subclase de super pinches entienden el mensaje "danio()". La única diferencia es que los super pinches sobreescriben el método para causar un daño de 2, en lugar de que sea de 1. Los pinches también aprovechan el polimorfismo de los personajes ya que le envían el mensaje "pincharseCon(self)" al personaje que los toca sin importar como implementan el método ni quién sea ese personaje. Podría, de esta forma, crearse un personaje al que no le pase nada al picharse, sin necesidad de realizar demasiadas modificaciones. Simplemente este personaje no le enviaría el mensaje "perderVida()" al gestor de niveles. 
 
 **Colecciones: ¿Qué operaciones de colecciones se utilizan? ¿Usaron mensajes con y sin efecto? ¿Para qué?**
 

@@ -21,9 +21,9 @@ class ObjetoMovible inherits Objeto{
 		}
 	}
 	
-	method puedeMoverseA(dir) = game.getObjectsIn(self.siguientePosicion(dir)).all({objeto => objeto.puedePisarse()}) || game.getObjectsIn(self.siguientePosicion(dir)).isEmpty()	
+	method puedeMoverseA(dir) = game.getObjectsIn(self.proximaPosicion(dir)).all({objeto => objeto.puedePisarse()}) || game.getObjectsIn(self.proximaPosicion(dir)).isEmpty()	
 	
-	method siguientePosicion(dir) = dir.siguientePosicion(position)	
+	method proximaPosicion(dir) = dir.siguientePosicion(position)	
 }
 
 class Personaje inherits ObjetoMovible{
@@ -39,7 +39,7 @@ class PersonajeFuerte inherits Personaje{
 			position = dir.siguientePosicion(position)
 		}
 		else{
-			game.getObjectsIn(self.siguientePosicion(dir)).forEach({objeto => objeto.moverA(dir)})
+			game.getObjectsIn(self.proximaPosicion(dir)).forEach({objeto => objeto.moverA(dir)})
 		}
 	}
 	
@@ -228,9 +228,12 @@ const paredes= [
 	new Pared(position = game.at(10,6)),
 	new Pared(position = game.at(10,7)),
 	new Pared(position = game.at(10,8)),
-	new Pared(position = game.at(10,9))
+	new Pared(position = game.at(10,9)),
+	new Piramide(position = game.at(1,9)),
+	new BarraDeVidas(position = game.at(0,9))
 	]
-	
+	//const piramide = new Piramide(position = game.at(1,9))
+	//const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
 	method crear(){
 		paredes.forEach({pared => game.addVisual(pared)})
 	} 
