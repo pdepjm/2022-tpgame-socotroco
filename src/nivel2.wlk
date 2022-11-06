@@ -20,7 +20,7 @@ const nivel2 = new Nivel(
 	 
 	 puerta = new Puerta(position = game.at(8,2)),
 	 
-	 cajas = [new Caja(posicionInicial = game.at(3,6), position = game.at(3,6)), new Caja(posicionInicial = game.at(6,8), position = game.at(6,8))],
+	 cajas = [new Caja(posicionInicial = game.at(3,6)), new Caja(posicionInicial = game.at(6,8))],
 	 
 	 objetoGanador = new ObjetoGanador(position = game.at(8,0), image = "familia.png"),
 	 
@@ -29,12 +29,12 @@ const nivel2 = new Nivel(
 	 	new Pinche(position = game.at(1,6)),
 	 	new Pinche(position = game.at(2,6)),
 	 	new Pinche(position = game.at(4,6)),
-	 	new Pinche(position = game.at(5,6)),
+	 	new SuperPinche(position = game.at(5,6)),
 	 	new Pinche(position = game.at(5,7)),
 	 	new Pinche(position = game.at(5,8)),
-	 	new Pinche(position = game.at(6,6)),
+	 	new SuperPinche(position = game.at(6,6)),
 	 	new Pinche(position = game.at(1,1)),
-	 	new Pinche(position = game.at(1,0)),
+	 	new SuperPinche(position = game.at(1,0)),
 		new Pinche(position = game.at(2,0))
 	 ],
 	 

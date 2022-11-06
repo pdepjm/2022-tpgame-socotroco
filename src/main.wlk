@@ -70,7 +70,7 @@ class Codigo inherits Objeto{
 		activado = true
 		image = "codigo.png"
 		gscCounter += 1
-		game.schedule(4000, {gscCounter -= 1})
+		game.schedule(5000, {gscCounter -= 1})
 	}
 	
 	method image() = image
@@ -94,12 +94,13 @@ class Codigo inherits Objeto{
 }
 
 class Caja inherits ObjetoMovible{
-	var property posicionInicial
+	const property posicionInicial
 	
 	override method crear(){
 		self.position(posicionInicial)
-		game.addVisual(self)
+		super()
 	}
+	
 	override method esCaja() = true
 	override method puedePisarse() = false
 	
@@ -232,10 +233,12 @@ const paredes= [
 	new Piramide(position = game.at(1,9)),
 	new BarraDeVidas(position = game.at(0,9))
 	]
-	//const piramide = new Piramide(position = game.at(1,9))
-	//const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
+	
+	
 	method crear(){
 		paredes.forEach({pared => game.addVisual(pared)})
+		game.addVisual(piramide)
+		game.addVisual(barraDeVidas)
 	} 
 }
 
@@ -246,6 +249,9 @@ class BarraDeVidas inherits Objeto{
 class Piramide inherits Objeto{
 	method image() = "nivel" + gestorNiveles.nivelActualNumero().toString() + ".png"
 }
+
+const piramide = new Piramide(position = game.at(1,9))
+const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
 
 class Visual {
 	var property image

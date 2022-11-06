@@ -2,18 +2,21 @@ import wollok.game.*
 import main.*
 import configuracion.*
 import nivel1.*
+import nivel2.*
+import nivel3.*
+import nivel4.*
 import nivel5.*
 import juego.*
 
 object gestorNiveles{
 	var property nivelActualNumero = 1
-	var property nivelActual = nivel1
+	var property nivelActual = nivel3
 	var property vidas = 3
 	
 	method ultimoNivel() = self.nivelActual().siguienteNivel() == null
 	
 	method perderVida(){
-		if(vidas == 1 || self.nivelActual().toString() == "nivel1") {game.stop()} else {
+		if(vidas == 1) {game.stop()} else {
 			vidas -= 1
 			nivelActual.reiniciarse()
 		}

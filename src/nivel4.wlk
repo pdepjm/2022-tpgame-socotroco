@@ -31,17 +31,17 @@ const nivel4 = new Nivel(
 		new Pared(position = game.at(9,7))    
 	 ],
 	 	
-	 codigos = [new Codigo(position = game.at(0,2)),new Codigo(position = game.at(1,8))],	
+	 codigos = [new Codigo(position = game.at(0,2)),new Codigo(position = game.at(1,8)),new Codigo(position = game.at(5,0))],	
 	  
 	 placas = [new Placa(position = game.at(1,0)),new Placa(position = game.at(3,2)), new Placa(position = game.at(5,1)), new Placa(position = game.at(7,2))],
 	 
 	 puerta = new Puerta(position = game.at(8,7)),
 	 
 	 cajas = [
-	 	new Caja(posicionInicial = game.at(1,7), position = game.at(1,7)),
-	 	new Caja(posicionInicial = game.at(3,4), position = game.at(3,4)),
-	 	new Caja(posicionInicial = game.at(8,3), position = game.at(8,3)),
-	 	new Caja(posicionInicial = game.at(7,1), position = game.at(7,1))
+	 	new Caja(posicionInicial = game.at(1,7)),
+	 	new Caja(posicionInicial = game.at(3,4)),
+	 	new Caja(posicionInicial = game.at(8,3)),
+	 	new Caja(posicionInicial = game.at(7,1))
 	 ],
 	 
 	 objetoGanador = new ObjetoGanador(position = game.at(9,9), image = "dinero.png"),

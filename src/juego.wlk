@@ -14,7 +14,7 @@ object juego {
 	method ganarJuego(){
 		game.clear()
 		game.addVisual(imagenGanadora)
-		game.schedule(5000,{game.stop()})
+		game.schedule(15000,{game.stop()})
 	}
 	
 }
