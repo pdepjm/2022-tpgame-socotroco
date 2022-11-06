@@ -10,7 +10,7 @@ import juego.*
 
 object gestorNiveles{
 	var property nivelActualNumero = 1
-	var property nivelActual = nivel4
+	var property nivelActual = nivel1
 	var property vidas = 3
 	
 	method ultimoNivel() = self.nivelActual().siguienteNivel() == null
