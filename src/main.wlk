@@ -21,7 +21,7 @@ class ObjetoMovible inherits Objeto{
 		}
 	}
 	
-	method puedeMoverseA(dir) = game.getObjectsIn(self.proximaPosicion(dir)).all({objeto => objeto.puedePisarse()}) || game.getObjectsIn(self.proximaPosicion(dir)).isEmpty()	
+	method puedeMoverseA(dir) =  game.getObjectsIn(self.proximaPosicion(dir)).all({objeto => objeto.puedePisarse()}) || game.getObjectsIn(self.proximaPosicion(dir)).isEmpty()
 	
 	method proximaPosicion(dir) = dir.siguientePosicion(position)	
 }
@@ -85,12 +85,6 @@ class Codigo inherits Objeto{
 		activado = false
 		image = "codigo_no_resuelto.png"
 	}
-	
-	override method colisionarConPersonaje(personaje){
-		if(personaje == personajeInteligente){
-			self.activado(true)
-		}
-	}
 }
 
 class Caja inherits ObjetoMovible{
@@ -113,7 +107,7 @@ class Placa inherits Objeto{
 	var property ultimoColisionador = personajeInteligente
 	
 	method configuracionInicial(){
-		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca; self.activar()})
+		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca})
 		game.onTick(25, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
 	}
 	
