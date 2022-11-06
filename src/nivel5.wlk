@@ -13,7 +13,6 @@ const nivel5 = new Nivel(
 		new Pared(position = game.at(1,6)),
 		new Pared(position = game.at(2,6)),
 		new Pared(position = game.at(4,6)),
-		new Pared(position = game.at(6,8)),
 		new Pared(position = game.at(7,7)),
 		new Pared(position = game.at(4,8)),
 		new Pared(position = game.at(2,1)),
@@ -55,6 +54,7 @@ const nivel5 = new Nivel(
 	 	new Pinche(position = game.at(3,2)),
 	 	new Pinche(position = game.at(6,5)),
 	 	new Pinche(position = game.at(6,6)),
+	 	new Pinche(position = game.at(6,8)),
 	 	new SuperPinche(position = game.at(9,7)),
 	 	new SuperPinche(position = game.at(9,9))
 	 ],
