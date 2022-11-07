@@ -73,7 +73,7 @@ class Nivel{
 	
 	method crearYConfigurarObjetos(){
 		self.crearTodos(paredes + codigos + pinches + placas + [puerta] + [objetoGanador] + [bordes])
-		self.configurarTodos(placas + codigos)
+		self.configurarTodos(placas + codigos + cajas)
 		
 		personajeInteligente.position(posInicialInteligente)
 		personajeFuerte.position(posInicialFuerte)

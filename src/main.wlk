@@ -11,7 +11,6 @@ class Objeto{
 	
 	method moverA(_){}
 	method colisionarConPersonaje(_){}
-	method esCaja() = false
 }
 
 class ObjetoMovible inherits Objeto{
@@ -36,7 +35,7 @@ class Personaje inherits ObjetoMovible{
 }
 
 class PersonajeFuerte inherits Personaje{
-	method image() = "forzudo.png"
+	method image() = "personajeFuerte.png"
 	
 	override method moverA(dir){
 		const proximaPosicion = self.proximaPosicion(dir)
@@ -51,9 +50,10 @@ class PersonajeFuerte inherits Personaje{
 }
 
 class PersonajeInteligente inherits Personaje{
-	method image() = "cerebro.png"
+	var property esInvulnerable = false
+	method image() = "personajeInteligente.png"
 	
-	override method pincharseCon(algo) {if (game.getObjectsIn(position).any({objeto => objeto.esCaja()})) {} else {super(algo)}}
+	override method pincharseCon(algo) {if (!esInvulnerable) super(algo)}
 }
 
 const personajeFuerte = new PersonajeFuerte()
@@ -64,7 +64,7 @@ class Codigo inherits Objeto{
 	var property activado = false
 	var property image = "codigo_no_resuelto.png"
 	
-	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo 1
+	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo
 	
 	override method crear(){
 		self.bloquearCodigo()
@@ -82,8 +82,8 @@ class Codigo inherits Objeto{
 	
 	method configuracionInicial(){
 		gscCounter = 0
-		game.onTick(25, "Desbloquear código", {if(personajeInteligente.position() == self.position()) {self.resolverCodigo()}})
-		game.onTick(25, "Si gscCounter es 0 desactivar codigo", {if (gscCounter == 0) {self.bloquearCodigo()} else {}})
+		game.onTick(15, "Desbloquear código", {if(personajeInteligente.position() == self.position()) {self.resolverCodigo()}})
+		game.onTick(15, "Si gscCounter es 0 desactivar codigo", {if (gscCounter == 0) {self.bloquearCodigo()}})
 	}
 	
 	method bloquearCodigo(){
@@ -94,16 +94,34 @@ class Codigo inherits Objeto{
 
 class Caja inherits ObjetoMovible{
 	const property posicionInicial
+	var property image = "caja.png"
 	
 	override method crear(){
 		self.position(posicionInicial)
 		super()
 	}
 	
-	override method esCaja() = true
-	override method puedePisarse() = false
+	method configuracionInicial(){
+		// Tiene que ser un game ontick con intervalo muy corto por el tema de los pinches, si fuese un intervalo muy alto puede ocurrir que ocurra primero el onCollide con pinches antes que el false de la invulnerabilidad, por ende, no se pincharía cuando sí debería pincharse.
+		game.onTick(3, "Chequear si tiene adentro pj inteligente", {
+			if(personajeInteligente.position() == self.position()) 
+				{self.cajaInteligente()} 
+			else 
+				{self.cajaSolita()}
+		})
+	}
 	
-	method image() = "caja.png"
+	method cajaInteligente(){
+		image = "cajaPersonajeInteligente.png"; 
+		personajeInteligente.esInvulnerable(true)
+	}
+	
+	method cajaSolita(){
+		image = "caja.png";
+		personajeInteligente.esInvulnerable(false)
+	}
+	
+	override method puedePisarse() = false
 }
 
 class Placa inherits Objeto{
@@ -113,7 +131,7 @@ class Placa inherits Objeto{
 	
 	method configuracionInicial(){
 		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca})
-		game.onTick(25, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
+		game.onTick(15, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
 	}
 	
 	 
@@ -149,7 +167,7 @@ class Puerta inherits Objeto{
 }
 
 class Pinche inherits Objeto{
-	method image() = "Pinches.png"
+	method image() = "pinches.png"
 	
 	method danio() = 1
 	

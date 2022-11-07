@@ -29,7 +29,7 @@ object cfg{
 		keyboard.s().onPressDo({personajeFuerte.moverA(abajo)})
 		keyboard.a().onPressDo({personajeFuerte.moverA(izquierda)})
 		keyboard.d().onPressDo({personajeFuerte.moverA(derecha)})
-		keyboard.r().onPressDo({gestorNiveles.nivelActual().reiniciarse()})
+		keyboard.r().onPressDo({gestorNiveles.nivelActual().iniciar()})
 		
 		keyboard.up().onPressDo({personajeInteligente.moverA(arriba)})
 		keyboard.down().onPressDo({personajeInteligente.moverA(abajo)})
