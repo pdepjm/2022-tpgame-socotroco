@@ -16,7 +16,7 @@ object gestorNiveles{
 	method ultimoNivel() = self.nivelActual().siguienteNivel() == null
 	
 	method perderVida(){
-		if(vidas == 1) {game.stop()} else {
+		if(vidas == 1) {juego.perder()} else {
 			vidas -= 1
 			nivelActual.reiniciarse()
 		}
@@ -28,6 +28,14 @@ object gestorNiveles{
 			
 			game.clear()
 			nivelActual.configuracionInicial()
+	}
+	
+	method volverAEmpezar(){
+		vidas = 3
+		nivelActual = nivel1
+		nivelActualNumero = 1
+		game.clear()
+		nivelActual.configuracionInicial()
 	}
 }
 

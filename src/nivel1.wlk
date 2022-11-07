@@ -36,10 +36,10 @@ const nivel1 = new Nivel(
 	 	new Pinche(position = game.at(8,8)),
 	 	new Pinche(position = game.at(8,9)),
 	 	new Pinche(position = game.at(3,2)),
-	 	new SuperPinche(position = game.at(0,2)),
-	 	new SuperPinche(position = game.at(2,0))
+	 	new Pinche(position = game.at(0,2)),
+	 	new Pinche(position = game.at(2,0))
 	 ],
 	 
-	 posInicialFuerte = game.at(3,3),
-	 posInicialInteligente = game.at(6,5)
+	 posInicialFuerte = game.at(0,8),
+	 posInicialInteligente = game.at(1,8)
 )

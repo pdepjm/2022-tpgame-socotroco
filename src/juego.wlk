@@ -2,7 +2,7 @@ import wollok.game.*
 import configuracion.*
 import niveles.*
 import main.*
-
+import nivel1.*
 
 object juego {
 	method iniciar() {
@@ -11,12 +11,17 @@ object juego {
 		game.start()
 	}
 	
-	method ganarJuego(){
+	method ganar(){
 		game.clear()
 		game.addVisual(imagenGanadora)
 		game.schedule(15000,{game.stop()})
 	}
 	
+	method perder(){
+		game.clear()
+		game.addVisual(imagenPerdedora)
+		game.schedule(5000,{gestorNiveles.volverAEmpezar()})
+	}
 }
 
 

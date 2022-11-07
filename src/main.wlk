@@ -171,7 +171,7 @@ class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
 			gestorNiveles.cargarSiguienteNivel()
 		}
 		else{
-			juego.ganarJuego()
+			juego.ganar()
 		}
 	}
 }
@@ -254,5 +254,10 @@ class Visual {
 
 const imagenGanadora = new Visual(
 	image = "imagenGanadora.png",
+	position = game.at(0,0)
+)
+
+const imagenPerdedora = new Visual(
+	image = "imagenPerdedora.png",
 	position = game.at(0,0)
 )
