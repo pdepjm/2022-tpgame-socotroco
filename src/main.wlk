@@ -16,14 +16,18 @@ class Objeto{
 
 class ObjetoMovible inherits Objeto{
 	override method moverA(dir){
-		if (self.puedeMoverseA(dir)){
-			position = dir.siguientePosicion(position)
+		const proximaPosicion = self.proximaPosicion(dir)
+		if (self.puedeMoverseA(proximaPosicion)){
+			position = proximaPosicion
 		}
 	}
 	
-	method puedeMoverseA(dir) =  game.getObjectsIn(self.proximaPosicion(dir)).all({objeto => objeto.puedePisarse()}) || game.getObjectsIn(self.proximaPosicion(dir)).isEmpty()
+	method puedeMoverseA(posicion) = self.todosPuedenPisarse(posicion) || self.casilleroVacio(posicion)
 	
-	method proximaPosicion(dir) = dir.siguientePosicion(position)	
+	method todosPuedenPisarse(posicion) = game.getObjectsIn(posicion).all({objeto => objeto.puedePisarse()})
+	method casilleroVacio(posicion) = game.getObjectsIn(posicion).isEmpty()
+	
+	method proximaPosicion(dir) = dir.siguientePosicion(position)
 }
 
 class Personaje inherits ObjetoMovible{
@@ -35,11 +39,12 @@ class PersonajeFuerte inherits Personaje{
 	method image() = "forzudo.png"
 	
 	override method moverA(dir){
-		if (self.puedeMoverseA(dir)){
-			position = dir.siguientePosicion(position)
+		const proximaPosicion = self.proximaPosicion(dir)
+		if (self.puedeMoverseA(proximaPosicion)){
+			position = proximaPosicion
 		}
 		else{
-			game.getObjectsIn(self.proximaPosicion(dir)).forEach({objeto => objeto.moverA(dir)})
+			game.getObjectsIn(proximaPosicion).forEach({objeto => objeto.moverA(dir)})
 		}
 	}
 	
@@ -156,30 +161,20 @@ class Pinche inherits Objeto{
 class SuperPinche inherits Pinche{
 	override method danio() = 2
 	
-	override method image() = "superPinches.png" //Aca debe ir una imagen de pinches distintos
+	override method image() = "superPinches.png"
 }
 
 
-
-class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
+class ObjetoGanador inherits Objeto{
 	var property image
 	
 	override method colisionarConPersonaje(personaje){
-		if(!gestorNiveles.ultimoNivel()){
-			game.say(personaje,"Pasé de nivel!")
-			gestorNiveles.nivelActualNumero(gestorNiveles.nivelActualNumero()+1)
-			gestorNiveles.cargarSiguienteNivel()
-		}
-		else{
-			juego.ganar()
-		}
+		gestorNiveles.cargarSiguienteNivel()
 	}
 }
 
-
-
 object bordes {
-const paredes= [
+const paredes = [
 	new Pared(position = game.at(0,9)),
 	new Pared(position = game.at(1,9)),
 	new Pared(position = game.at(0,-1)),
@@ -223,16 +218,14 @@ const paredes= [
 	new Pared(position = game.at(10,6)),
 	new Pared(position = game.at(10,7)),
 	new Pared(position = game.at(10,8)),
-	new Pared(position = game.at(10,9)),
-	new Piramide(position = game.at(1,9)),
-	new BarraDeVidas(position = game.at(0,9))
+	new Pared(position = game.at(10,9))
 	]
 	
 	
 	method crear(){
-		paredes.forEach({pared => game.addVisual(pared)})
-		game.addVisual(piramide)
-		game.addVisual(barraDeVidas)
+		paredes.forEach({pared => pared.crear()})
+		piramide.crear()
+		barraDeVidas.crear()
 	} 
 }
 

@@ -6,7 +6,7 @@ import nivel1.*
 
 object juego {
 	method iniciar() {
-		gestorNiveles.nivelActual().configuracionInicial()
+		gestorNiveles.nivelActual().iniciar()
 		cfg.configurarPantalla()
 		game.start()
 	}
