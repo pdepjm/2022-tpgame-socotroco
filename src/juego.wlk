@@ -21,7 +21,6 @@ object juego{
 	method perder(){
 		game.clear()
 		imagenPerdedora.mostrar()
-		gestorDeSonido.pausar()
 		game.schedule(5000,{gestorNiveles.volverAEmpezar()})
 	}
 }
