@@ -69,12 +69,11 @@ class Nivel{
 		self.crearYConfigurarObjetos()
 		cfg.configurarPersonajes()
 		self.crearTodos(cajas) // Las cajas las creo después de crear los personajes así el personaje inteligente se puede meter a dentro de la caja
-		self.configurarTodos(cajas)
 	}
 	
 	method crearYConfigurarObjetos(){
 		self.crearTodos(paredes + codigos + pinches + placas + [puerta] + [objetoGanador] + [bordes])
-		self.configurarTodos(placas + codigos)
+		self.configurarTodos(placas + codigos + cajas)
 		
 		personajeInteligente.position(posInicialInteligente)
 		personajeFuerte.position(posInicialFuerte)

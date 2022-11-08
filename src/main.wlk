@@ -35,7 +35,7 @@ class Personaje inherits ObjetoMovible{
 	method morir() = game.stop()
 }
 
-class PersonajeFuerte inherits Personaje{
+object personajeFuerte inherits Personaje{
 	method image() = "personajeFuerte.png"
 	
 	override method moverA(dir){
@@ -50,7 +50,7 @@ class PersonajeFuerte inherits Personaje{
 	
 }
 
-class PersonajeInteligente inherits Personaje{
+object personajeInteligente inherits Personaje{
 	method image() = "personajeInteligente.png"
 	
 	override method pincharseCon(algo) {if (!self.adentroDeCaja()) super(algo)}
@@ -58,8 +58,8 @@ class PersonajeInteligente inherits Personaje{
 	method adentroDeCaja() = game.getObjectsIn(position).any({objeto => objeto.esCaja()})
 }
 
-const personajeFuerte = new PersonajeFuerte()
-const personajeInteligente = new PersonajeInteligente()
+//const personajeFuerte = new PersonajeFuerte()
+//const personajeInteligente = new PersonajeInteligente()
 
 
 class Codigo inherits Objeto{
@@ -240,16 +240,14 @@ const paredes = [
 	} 
 }
 
-class BarraDeVidas inherits Objeto{
+object barraDeVidas inherits Objeto (position = game.at(0,9)){
 	method image() = "vidas-" + gestorNiveles.vidas().toString() + "corazon.png"
 }
 
-class Piramide inherits Objeto{
+object piramide inherits Objeto (position = game.at(1,9)){
 	method image() = "nivel" + gestorNiveles.nivelActualNumero().toString() + ".png"
+	
 }
-
-const piramide = new Piramide(position = game.at(1,9))
-const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
 
 class Visual {
 	var property image

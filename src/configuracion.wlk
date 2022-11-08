@@ -20,8 +20,8 @@ object cfg{
 	
 	
 	method agregarPersonajes(){
-		game.addVisual(personajeFuerte)
-		game.addVisual(personajeInteligente)
+		personajeFuerte.crear()
+		personajeInteligente.crear()
 	}
 	
 	method configurarTeclas() {
