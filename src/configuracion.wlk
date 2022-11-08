@@ -35,6 +35,8 @@ object cfg{
 		keyboard.down().onPressDo({personajeInteligente.moverA(abajo)})
 		keyboard.left().onPressDo({personajeInteligente.moverA(izquierda)})
 		keyboard.right().onPressDo({personajeInteligente.moverA(derecha)})
+		
+		keyboard.m().onPressDo({gestorDeSonido.cambiar()})
 	}
 
 	method configurarColisiones(){

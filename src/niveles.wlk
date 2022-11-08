@@ -61,6 +61,7 @@ class Nivel{
 	
 	method iniciar(){
 		self.cargarEscenario()
+		gestorDeSonido.iniciar()
 		game.onTick(25,"verificar abrir puerta", {if (self.requisitosCumplidos()) {puerta.abrir()} else {puerta.cerrar()}})
 	}
 	

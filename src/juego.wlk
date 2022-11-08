@@ -4,7 +4,7 @@ import niveles.*
 import main.*
 import nivel1.*
 
-object juego {
+object juego{
 	method iniciar() {
 		cfg.configurarPantalla()
 		imagenInicio.mostrar()
@@ -21,6 +21,7 @@ object juego {
 	method perder(){
 		game.clear()
 		imagenPerdedora.mostrar()
+		gestorDeSonido.pausar()
 		game.schedule(5000,{gestorNiveles.volverAEmpezar()})
 	}
 }
