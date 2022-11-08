@@ -11,19 +11,22 @@ class Objeto{
 	
 	method moverA(_){}
 	method colisionarConPersonaje(_){}
-	method esCaja() = false
 }
 
 class ObjetoMovible inherits Objeto{
 	override method moverA(dir){
-		if (self.puedeMoverseA(dir)){
-			position = dir.siguientePosicion(position)
+		const proximaPosicion = self.proximaPosicion(dir)
+		if (self.puedeMoverseA(proximaPosicion)){
+			position = proximaPosicion
 		}
 	}
 	
-	method puedeMoverseA(dir) =  game.getObjectsIn(self.proximaPosicion(dir)).all({objeto => objeto.puedePisarse()}) || game.getObjectsIn(self.proximaPosicion(dir)).isEmpty()
+	method puedeMoverseA(posicion) = self.todosPuedenPisarse(posicion) || self.casilleroVacio(posicion)
 	
-	method proximaPosicion(dir) = dir.siguientePosicion(position)	
+	method todosPuedenPisarse(posicion) = game.getObjectsIn(posicion).all({objeto => objeto.puedePisarse()})
+	method casilleroVacio(posicion) = game.getObjectsIn(posicion).isEmpty()
+	
+	method proximaPosicion(dir) = dir.siguientePosicion(position)
 }
 
 class Personaje inherits ObjetoMovible{
@@ -32,23 +35,25 @@ class Personaje inherits ObjetoMovible{
 }
 
 class PersonajeFuerte inherits Personaje{
-	method image() = "forzudo.png"
+	method image() = "personajeFuerte.png"
 	
 	override method moverA(dir){
-		if (self.puedeMoverseA(dir)){
-			position = dir.siguientePosicion(position)
+		const proximaPosicion = self.proximaPosicion(dir)
+		if (self.puedeMoverseA(proximaPosicion)){
+			position = proximaPosicion
 		}
 		else{
-			game.getObjectsIn(self.proximaPosicion(dir)).forEach({objeto => objeto.moverA(dir)})
+			game.getObjectsIn(proximaPosicion).forEach({objeto => objeto.moverA(dir)})
 		}
 	}
 	
 }
 
 class PersonajeInteligente inherits Personaje{
-	method image() = "cerebro.png"
+	var property esInvulnerable = false
+	method image() = "personajeInteligente.png"
 	
-	override method pincharseCon(algo) {if (game.getObjectsIn(position).any({objeto => objeto.esCaja()})) {} else {super(algo)}}
+	override method pincharseCon(algo) {if (!esInvulnerable) super(algo)}
 }
 
 const personajeFuerte = new PersonajeFuerte()
@@ -59,7 +64,7 @@ class Codigo inherits Objeto{
 	var property activado = false
 	var property image = "codigo_no_resuelto.png"
 	
-	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo 1
+	var gscCounter = 0 // Cuenta la cantidad de gameSchedules corriendo al mismo tiempo
 	
 	override method crear(){
 		self.bloquearCodigo()
@@ -77,8 +82,8 @@ class Codigo inherits Objeto{
 	
 	method configuracionInicial(){
 		gscCounter = 0
-		game.onTick(25, "Desbloquear código", {if(personajeInteligente.position() == self.position()) {self.resolverCodigo()}})
-		game.onTick(25, "Si gscCounter es 0 desactivar codigo", {if (gscCounter == 0) {self.bloquearCodigo()} else {}})
+		game.onTick(15, "Desbloquear código", {if(personajeInteligente.position() == self.position()) {self.resolverCodigo()}})
+		game.onTick(15, "Si gscCounter es 0 desactivar codigo", {if (gscCounter == 0) {self.bloquearCodigo()}})
 	}
 	
 	method bloquearCodigo(){
@@ -89,16 +94,34 @@ class Codigo inherits Objeto{
 
 class Caja inherits ObjetoMovible{
 	const property posicionInicial
+	var property image = "caja.png"
 	
 	override method crear(){
 		self.position(posicionInicial)
 		super()
 	}
 	
-	override method esCaja() = true
-	override method puedePisarse() = false
+	method configuracionInicial(){
+		// Tiene que ser un game ontick con intervalo muy corto por el tema de los pinches, si fuese un intervalo muy alto puede ocurrir que ocurra primero el onCollide con pinches antes que el false de la invulnerabilidad, por ende, no se pincharía cuando sí debería pincharse.
+		game.onTick(3, "Chequear si tiene adentro pj inteligente", {
+			if(personajeInteligente.position() == self.position()) 
+				{self.cajaInteligente()} 
+			else 
+				{self.cajaSolita()}
+		})
+	}
 	
-	method image() = "caja.png"
+	method cajaInteligente(){
+		image = "cajaPersonajeInteligente.png"; 
+		personajeInteligente.esInvulnerable(true)
+	}
+	
+	method cajaSolita(){
+		image = "caja.png";
+		personajeInteligente.esInvulnerable(false)
+	}
+	
+	override method puedePisarse() = false
 }
 
 class Placa inherits Objeto{
@@ -108,7 +131,7 @@ class Placa inherits Objeto{
 	
 	method configuracionInicial(){
 		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca})
-		game.onTick(25, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
+		game.onTick(15, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
 	}
 	
 	 
@@ -144,7 +167,7 @@ class Puerta inherits Objeto{
 }
 
 class Pinche inherits Objeto{
-	method image() = "Pinches.png"
+	method image() = "pinches.png"
 	
 	method danio() = 1
 	
@@ -156,30 +179,20 @@ class Pinche inherits Objeto{
 class SuperPinche inherits Pinche{
 	override method danio() = 2
 	
-	override method image() = "superPinches.png" //Aca debe ir una imagen de pinches distintos
+	override method image() = "superPinches.png"
 }
 
 
-
-class ObjetoGanador inherits Objeto{ //Objeto para pasar al nivel 2
+class ObjetoGanador inherits Objeto{
 	var property image
 	
 	override method colisionarConPersonaje(personaje){
-		if(!gestorNiveles.ultimoNivel()){
-			game.say(personaje,"Pasé de nivel!")
-			gestorNiveles.nivelActualNumero(gestorNiveles.nivelActualNumero()+1)
-			gestorNiveles.cargarSiguienteNivel()
-		}
-		else{
-			juego.ganarJuego()
-		}
+		gestorNiveles.cargarSiguienteNivel()
 	}
 }
 
-
-
 object bordes {
-const paredes= [
+const paredes = [
 	new Pared(position = game.at(0,9)),
 	new Pared(position = game.at(1,9)),
 	new Pared(position = game.at(0,-1)),
@@ -223,16 +236,14 @@ const paredes= [
 	new Pared(position = game.at(10,6)),
 	new Pared(position = game.at(10,7)),
 	new Pared(position = game.at(10,8)),
-	new Pared(position = game.at(10,9)),
-	new Piramide(position = game.at(1,9)),
-	new BarraDeVidas(position = game.at(0,9))
+	new Pared(position = game.at(10,9))
 	]
 	
 	
 	method crear(){
-		paredes.forEach({pared => game.addVisual(pared)})
-		game.addVisual(piramide)
-		game.addVisual(barraDeVidas)
+		paredes.forEach({pared => pared.crear()})
+		piramide.crear()
+		barraDeVidas.crear()
 	} 
 }
 
@@ -254,5 +265,10 @@ class Visual {
 
 const imagenGanadora = new Visual(
 	image = "imagenGanadora.png",
+	position = game.at(0,0)
+)
+
+const imagenPerdedora = new Visual(
+	image = "imagenPerdedora.png",
 	position = game.at(0,0)
 )

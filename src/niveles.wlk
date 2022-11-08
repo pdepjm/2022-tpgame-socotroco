@@ -16,18 +16,33 @@ object gestorNiveles{
 	method ultimoNivel() = self.nivelActual().siguienteNivel() == null
 	
 	method perderVida(){
-		if(vidas == 1) {game.stop()} else {
+		if (vidas == 1) juego.perder() 
+		else {
 			vidas -= 1
-			nivelActual.reiniciarse()
+			nivelActual.iniciar()
 		}
 	}
 	
 	method cargarSiguienteNivel(){
+		if(!self.ultimoNivel()){
 			nivelActual = nivelActual.siguienteNivel()
+			nivelActualNumero++
 			vidas = 3
 			
-			game.clear()
-			nivelActual.configuracionInicial()
+			nivelActual.iniciar()	
+		}
+		else{
+			juego.ganar()
+		}
+		
+	}
+	
+	method volverAEmpezar(){
+		vidas = 3
+		nivelActual = nivel1
+		nivelActualNumero = 1
+		
+		nivelActual.iniciar()
 	}
 }
 
@@ -44,17 +59,13 @@ class Nivel{
 	var property posInicialFuerte
 	var property posInicialInteligente
 	
-	method reiniciarse(){
-		game.clear()
-		self.configuracionInicial()
-	}
-	
-	method configuracionInicial(){
+	method iniciar(){
 		self.cargarEscenario()
-		game.onTick(50,"verificar abrir puerta", {if (self.requisitosCumplidos()) {puerta.abrir()} else {puerta.cerrar()}})
+		game.onTick(25,"verificar abrir puerta", {if (self.requisitosCumplidos()) {puerta.abrir()} else {puerta.cerrar()}})
 	}
 	
 	method cargarEscenario(){
+		game.clear()
 		self.crearYConfigurarObjetos()
 		cfg.configurarPersonajes()
 		self.crearTodos(cajas) // Las cajas las creo después de crear los personajes así el personaje inteligente se puede meter a dentro de la caja
@@ -62,7 +73,7 @@ class Nivel{
 	
 	method crearYConfigurarObjetos(){
 		self.crearTodos(paredes + codigos + pinches + placas + [puerta] + [objetoGanador] + [bordes])
-		self.configurarTodos(placas + codigos)
+		self.configurarTodos(placas + codigos + cajas)
 		
 		personajeInteligente.position(posInicialInteligente)
 		personajeFuerte.position(posInicialFuerte)
@@ -78,5 +89,5 @@ class Nivel{
 	
 		
 	method requisitosCumplidos() = 
-		(placas + codigos).all({objetos => objetos.activado()})
+		(placas + codigos).all({placaCodigo => placaCodigo.activado()})
 }

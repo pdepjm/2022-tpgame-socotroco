@@ -29,12 +29,12 @@ const nivel2 = new Nivel(
 	 	new Pinche(position = game.at(1,6)),
 	 	new Pinche(position = game.at(2,6)),
 	 	new Pinche(position = game.at(4,6)),
-	 	new SuperPinche(position = game.at(5,6)),
+	 	new Pinche(position = game.at(5,6)),
 	 	new Pinche(position = game.at(5,7)),
 	 	new Pinche(position = game.at(5,8)),
-	 	new SuperPinche(position = game.at(6,6)),
+	 	new Pinche(position = game.at(6,6)),
 	 	new Pinche(position = game.at(1,1)),
-	 	new SuperPinche(position = game.at(1,0)),
+	 	new Pinche(position = game.at(1,0)),
 		new Pinche(position = game.at(2,0))
 	 ],
 	 
