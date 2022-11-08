@@ -61,7 +61,10 @@ const nivel3 = new Nivel(
 	 	new Pinche(position = game.at(6,2)),
 	 	new Pinche(position = game.at(4,3)),
 	 	new Pinche(position = game.at(5,3)),
-	 	new Pinche(position = game.at(9,3))
+	 	new Pinche(position = game.at(9,3)),
+	 	new Pinche(position = game.at(7,0)),
+	 	new Pinche(position = game.at(7,2)),
+	 	new Pinche(position = game.at(4,1))
 	 ],
 	 
 	 posInicialFuerte = game.at(3,8),
