@@ -39,5 +39,5 @@ const nivel2 = new Nivel(
 	 ],
 	 
 	 posInicialFuerte = game.at(3,8),
-	 posInicialInteligente = game.at(0,0)
+	 posInicialInteligente = game.at(5,0)
 )

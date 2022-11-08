@@ -6,20 +6,21 @@ import nivel1.*
 
 object juego {
 	method iniciar() {
-		gestorNiveles.nivelActual().iniciar()
 		cfg.configurarPantalla()
+		imagenInicio.mostrar()
+		game.schedule(5000, {gestorNiveles.nivelActual().iniciar()})
 		game.start()
 	}
 	
 	method ganar(){
 		game.clear()
-		game.addVisual(imagenGanadora)
+		imagenGanadora.mostrar()
 		game.schedule(15000,{game.stop()})
 	}
 	
 	method perder(){
 		game.clear()
-		game.addVisual(imagenPerdedora)
+		imagenPerdedora.mostrar()
 		game.schedule(5000,{gestorNiveles.volverAEmpezar()})
 	}
 }

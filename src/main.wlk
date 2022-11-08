@@ -11,6 +11,7 @@ class Objeto{
 	
 	method moverA(_){}
 	method colisionarConPersonaje(_){}
+	method esCaja() = false
 }
 
 class ObjetoMovible inherits Objeto{
@@ -50,10 +51,11 @@ class PersonajeFuerte inherits Personaje{
 }
 
 class PersonajeInteligente inherits Personaje{
-	var property esInvulnerable = false
 	method image() = "personajeInteligente.png"
 	
-	override method pincharseCon(algo) {if (!esInvulnerable) super(algo)}
+	override method pincharseCon(algo) {if (!self.adentroDeCaja()) super(algo)}
+	
+	method adentroDeCaja() = game.getObjectsIn(position).any({objeto => objeto.esCaja()})
 }
 
 const personajeFuerte = new PersonajeFuerte()
@@ -96,6 +98,7 @@ class Caja inherits ObjetoMovible{
 	const property posicionInicial
 	var property image = "caja.png"
 	
+	override method esCaja() = true
 	override method crear(){
 		self.position(posicionInicial)
 		super()
@@ -103,22 +106,12 @@ class Caja inherits ObjetoMovible{
 	
 	method configuracionInicial(){
 		// Tiene que ser un game ontick con intervalo muy corto por el tema de los pinches, si fuese un intervalo muy alto puede ocurrir que ocurra primero el onCollide con pinches antes que el false de la invulnerabilidad, por ende, no se pincharía cuando sí debería pincharse.
-		game.onTick(3, "Chequear si tiene adentro pj inteligente", {
+		game.onTick(10, "Chequear si tiene adentro pj inteligente",{
 			if(personajeInteligente.position() == self.position()) 
-				{self.cajaInteligente()} 
+				image = "cajaPersonajeInteligente.png"
 			else 
-				{self.cajaSolita()}
-		})
-	}
-	
-	method cajaInteligente(){
-		image = "cajaPersonajeInteligente.png"; 
-		personajeInteligente.esInvulnerable(true)
-	}
-	
-	method cajaSolita(){
-		image = "caja.png";
-		personajeInteligente.esInvulnerable(false)
+				image = "caja.png"
+			})
 	}
 	
 	override method puedePisarse() = false
@@ -260,15 +253,11 @@ const barraDeVidas = new BarraDeVidas(position = game.at(0,9))
 
 class Visual {
 	var property image
-	var property position = game.origin()
+	method position() = game.at(0,0)
+	
+	method mostrar(){ game.addVisual(self) }
 }
 
-const imagenGanadora = new Visual(
-	image = "imagenGanadora.png",
-	position = game.at(0,0)
-)
-
-const imagenPerdedora = new Visual(
-	image = "imagenPerdedora.png",
-	position = game.at(0,0)
-)
+const imagenInicio = new Visual(image = "pantallaInicio.png")
+const imagenGanadora = new Visual(image = "imagenGanadora.png")
+const imagenPerdedora = new Visual(image = "imagenPerdedora.png")
