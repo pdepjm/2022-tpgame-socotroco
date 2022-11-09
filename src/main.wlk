@@ -3,25 +3,22 @@ import niveles.*
 import juego.*
 import direcciones.*
 
-const musicaNivel = game.sound("musiquita.mp3")
 
 object gestorDeSonido{
-	var property activo = false
-	var inicio = false
+	var activo = false
+	var musicaNivel = game.sound("musiquita.mp3")
 	
-	method iniciar(){if(!inicio){
-							musicaNivel.shouldLoop(true) 
-							activo = true
-							musicaNivel.play()
-							inicio = true}
+	method iniciar(){
+		musicaNivel.shouldLoop(true)
+		activo = true
+		musicaNivel.play()
 	}
 
 	method activar(){
-			activo = true
-			musicaNivel.resume()
-			}
+		activo = true
+		musicaNivel.resume()
+	}
 					
-
 	method pausar(){
 		activo = false
 		musicaNivel.pause()
@@ -29,6 +26,12 @@ object gestorDeSonido{
 	
 	method cambiar(){
 		if(activo) self.pausar() else self.activar()
+	}
+	
+	method ganar(){
+		musicaNivel.pause()
+		musicaNivel = game.sound("ganar.mp3")
+		musicaNivel.play()
 	}
 }
 

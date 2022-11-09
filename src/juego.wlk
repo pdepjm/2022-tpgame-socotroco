@@ -8,13 +8,15 @@ object juego{
 	method iniciar() {
 		cfg.configurarPantalla()
 		imagenInicio.mostrar()
-		game.schedule(5000, {gestorNiveles.nivelActual().iniciar()})
+		game.schedule(5000, {gestorNiveles.nivelActual().iniciar(); gestorDeSonido.iniciar()})
 		game.start()
 	}
 	
 	method ganar(){
+		//gestorDeSonido.pausar()
 		game.clear()
 		imagenGanadora.mostrar()
+		gestorDeSonido.ganar()
 		game.schedule(15000,{game.stop()})
 	}
 	
