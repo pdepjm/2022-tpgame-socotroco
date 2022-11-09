@@ -15,7 +15,7 @@ const nivel1 = new Nivel(
 	 	new Pared(position = game.at(4,6)),  
 	 	new Pared(position = game.at(7,0)),
 	 	new Pared(position = game.at(7,1)),  
-	 	new Pared(position = game.at(7,2)),  
+	 	new Pared(position = game.at(7,2)),
 	 	new Pared(position = game.at(9,2))
 	 ],
 	 	

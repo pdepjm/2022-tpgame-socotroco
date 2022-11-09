@@ -2,6 +2,7 @@ import wollok.game.*
 import main.*
 import direcciones.*
 import niveles.*
+import sonido.*
 
 object cfg{
 	method configurarPantalla() {

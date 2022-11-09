@@ -7,6 +7,7 @@ import nivel3.*
 import nivel4.*
 import nivel5.*
 import juego.*
+import visuales.*
 
 object gestorNiveles{
 	var property nivelActualNumero = 1
