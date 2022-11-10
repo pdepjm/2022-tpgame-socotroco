@@ -14,7 +14,7 @@
 
 ## Reglas de Juego / Instrucciones
 
-El juego consiste en hacer llegar a dos personajes, uno fuerte y otro inteligente, a uno de los objetos que les permitirá satisfacer las distintas necesidades de la pirámide de Maslow. Para ello deben trabajar en conjunto y lograr abrir la puerta que los dirige hacia el objetivo, debiendo pasar por diversos obstáculos. Al perder las 3 vidas que tienen, termina el juego. 
+El juego consiste en hacer llegar a dos personajes, uno fuerte y otro inteligente, a uno de los objetos que les permitirá satisfacer las distintas necesidades de la pirámide de Maslow. Para ello deben trabajar en conjunto y lograr abrir la puerta que los dirige hacia el objetivo, debiendo pasar por diversos obstáculos. Al perder las 3 vidas se reincia el juego. 
 - Las *paredes* no pueden ser atravesadas por ningún personaje.
 - Los *pinches* le quitan una vida a cualquiera que pise sobre ellos. También hay *super pinches* que quitan dos vidas.
 
@@ -69,4 +69,4 @@ Otro caso de delegación de responsabilidades es en el gestor de niveles, quien 
 
 - UTN FRBA
 - Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+- Una vez terminado, no tenemos problemas en que el repositorio sea público
