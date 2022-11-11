@@ -11,6 +11,7 @@ class Objeto{
 	method moverA(_){}
 	method colisionarConPersonaje(_){}
 	method esCaja() = false
+	method mismaPosicionQue(otroObjeto) = self.position() == otroObjeto.position()
 }
 
 class ObjetoMovible inherits Objeto{
@@ -57,10 +58,6 @@ object personajeInteligente inherits Personaje{
 	method adentroDeCaja() = game.getObjectsIn(position).any({objeto => objeto.esCaja()})
 }
 
-//const personajeFuerte = new PersonajeFuerte()
-//const personajeInteligente = new PersonajeInteligente()
-
-
 class Codigo inherits Objeto{
 	var property activado = false
 	var property image = "codigo_no_resuelto.png"
@@ -83,7 +80,7 @@ class Codigo inherits Objeto{
 	
 	method configuracionInicial(){
 		gscCounter = 0
-		game.onTick(15, "Desbloquear código", {if(personajeInteligente.position() == self.position()) {self.resolverCodigo()}})
+		game.onTick(15, "Desbloquear código", {if(personajeInteligente.mismaPosicionQue(self)) {self.resolverCodigo()}})
 		game.onTick(15, "Si gscCounter es 0 desactivar codigo", {if (gscCounter == 0) {self.bloquearCodigo()}})
 	}
 	
@@ -104,9 +101,8 @@ class Caja inherits ObjetoMovible{
 	}
 	
 	method configuracionInicial(){
-		// Tiene que ser un game ontick con intervalo muy corto por el tema de los pinches, si fuese un intervalo muy alto puede ocurrir que ocurra primero el onCollide con pinches antes que el false de la invulnerabilidad, por ende, no se pincharía cuando sí debería pincharse.
 		game.onTick(10, "Chequear si tiene adentro pj inteligente",{
-			if(personajeInteligente.position() == self.position()) 
+			if(personajeInteligente.mismaPosicionQue(self)) 
 				image = "cajaPersonajeInteligente.png"
 			else 
 				image = "caja.png"
@@ -118,12 +114,10 @@ class Caja inherits ObjetoMovible{
 
 class Placa inherits Objeto{
 	var property image = "placaRoja.png"
-	var property activado = false;
-	var property ultimoColisionador = personajeInteligente
+	var property activado = false
 	
 	method configuracionInicial(){
-		game.onCollideDo(self, {objetoSobrePlaca => ultimoColisionador = objetoSobrePlaca})
-		game.onTick(15, "Consultar Activacion", { if (ultimoColisionador.position() == self.position()) {self.activar()} else {self.desactivar()}})
+		game.onTick(15, "Consultar Activacion", { if (game.getObjectsIn(position).size() > 1) {self.activar()} else {self.desactivar()}})
 	}
 	
 	 
