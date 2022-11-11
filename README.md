@@ -17,12 +17,18 @@
 
 Hay 2 personajes:
 - Personaje Inteligente
+
 ![PI](imagenes/personajeInteligente.png) 
 - Personaje Fuerte
+
 ![PF](imagenes/personajeFuerte.png) 
+
+
 La idea del juego es que los personajes satisfagan las necesidades de cada escalón de la Pirámide de Maslow
+
 ![PiramideMaslow](imagenes/piramideMaslow.png)
-Deben trabajar en equipo para lograr abrir la puerta que los llevará al objetivo de cada nivel.
+
+Deberán trabajar en equipo para lograr abrir la puerta que los llevará al objetivo de cada nivel.
 Para ello deben:
 - Desbloquear todos los códigos
 - Presionar todas las placas
@@ -33,6 +39,7 @@ El Personaje Fuerte puede empujar cajas, que a su vez estas pueden presionar pla
 
 Por nivel hay 3 vidas que son compartidas por ambos jugadores, si uno se pincha ambos pierden una vida
 Lograrás alcanzar la autorrealización?
+
 
 
 
