@@ -1,6 +1,205 @@
+import wollok.game.*
+import configuracion.*
+import direcciones.*
+import juego.*
+import main.*
+import niveles.*
+import nivel1.*
+import nivel2.*
+import nivel3.*
+import nivel4.*
+import nivel5.*
+import configuracion.*
 
-test "testX" {
+describe "Piramide De Maslow" {
+	// Objetos importantes
+	
+	const cajaTesting = new Caja(posicionInicial = game.at(0,0))
+	const pincheTesting = new Pinche(position = game.at(0,0))
+	const superPincheTesting = new SuperPinche(position = game.at(0,0))
+	const codigoTesting = new Codigo(position = game.at(0,0))
+	const objetoGanadorTesting = new ObjetoGanador(position = game.at(0,0), image = "nota.png")
+	const placaTesting = new Placa(position = game.at(0,0))
+	const puertaTesting = new Puerta(position = game.at(0,0))
+	const paredTesting = new Pared(position = game.at(0,0))
+	
+	
+	// Nivel creado para testear siguiente Nivel
+	const siguienteNivelFake = new Nivel(
+		siguienteNivel = null,
+		
+	 paredes = [paredTesting],
+	 	
+	 codigos = [codigoTesting],	
+	  
+	 placas = [placaTesting],
+	 
+	 puerta = puertaTesting,
+	 
+	 cajas = [cajaTesting],
+	 
+	 objetoGanador = objetoGanadorTesting,
+	 
+	 pinches = [superPincheTesting, pincheTesting],
+	 
+	 posInicialFuerte = game.at(0,8),
+	 posInicialInteligente = game.at(2,2)
+	)
+	
+	const nivelTesting = new Nivel(
+		siguienteNivel = siguienteNivelFake,
+		
+	 paredes = [paredTesting],
+	 	
+	 codigos = [codigoTesting],	
+	  
+	 placas = [placaTesting],
+	 
+	 puerta = puertaTesting,
+	 
+	 cajas = [cajaTesting],
+	 
+	 objetoGanador = objetoGanadorTesting,
+	 
+	 pinches = [superPincheTesting, pincheTesting],
+	 
+	 posInicialFuerte = game.at(0,8),
+	 posInicialInteligente = game.at(2,2)
+	)
+	
+	 
+	
+	const personajeTesting = new Personaje(position = game.at(0,9))
+	
+	method initialize(){
+		
+		nivelTesting.reiniciarse()
+		game.addVisual(personajeTesting)
+	}
+	
+	test "Si un personaje intenta moverse en dirección a la caja, este se mantiene en su posición"
+	{
+		cajaTesting.position(game.at(5,5)) // Una posición cualquiera
+		const posicionInicialPersonaje = cajaTesting.position().down(1) // Abajo de la caja
+		personajeTesting.position(posicionInicialPersonaje)
+		personajeTesting.moverA(arriba)
+		
+		assert.equals(posicionInicialPersonaje, personajeTesting.position())
+	}
+	
+	test "Si el personaje fuerte choca con la caja, la misma es desplazada en la dirección en que se movió el personaje"
+	{
+		const posicionInicialCaja = game.at(5,5)
+		cajaTesting.position(posicionInicialCaja) // Una posición cualquiera
+		personajeFuerte.position(cajaTesting.position().down(1))
+		personajeFuerte.moverA(arriba)
+		
+		assert.equals(posicionInicialCaja.up(1), cajaTesting.position())
 
-	assert.that(true)
+	}
+	
+	test "Personaje no puede moverse a una posición donde hay una pared"
+	{
+		const posicionPared = game.at(5,5)
+		paredTesting.position(posicionPared)
+		personajeTesting.position(posicionPared.up(1))
+		personajeTesting.moverA(abajo)
+		
+		assert.notEquals(posicionPared, personajeTesting.position())
+	}
+	
+	test "El personaje inteligente no puede mover la caja"
+	{
+		const posicionInicialCaja = game.at(5,5)
+		cajaTesting.position(posicionInicialCaja) // Una posición cualquiera
+		personajeInteligente.position(posicionInicialCaja.down(1))
+		personajeInteligente.moverA(arriba)
+		
+		assert.equals(posicionInicialCaja, cajaTesting.position())
+	}
+	 
+	 
+	test "Si un personaje pisa los pinches pierde una vida"
+	{
+		const posicionPinches = game.at(5,5)
+		pincheTesting.position(posicionPinches)
+		
+		personajeTesting.position(posicionPinches.left(1))
+		personajeTesting.moverA(derecha)
+		// No sirve eso para testear, pero lo dejo porque estaría bueno que funcionase :D
+		
+		pincheTesting.colisionarConPersonaje(personajeTesting)	
+		// Tenemos que forzar la colisión porque sin esto no funciona el test
+		// Estaría bueno que funcionase sin esto, o sea porque la colisión se activaría cuando el personaje se mueve a la derecha y listo
+		
+		
+		assert.equals(2,gestorNiveles.vidas())
+	}
+	
+	test "Si un personaje pisa los superpinches pierde dos vidas"
+	{
+		superPincheTesting.colisionarConPersonaje(personajeTesting)
+		
+		
+		assert.equals(gestorNiveles.vidas(),1)
+	}
+	
+	test "Si se pierden todas las vidas, el juego finaliza"
+	{
+		gestorNiveles.perderVida()
+		gestorNiveles.perderVida()
+		assert.throwsException({gestorNiveles.perderVida()})
+	}
 
+	test "Si el personaje llega a la comida pasa al siguiente nivel"
+	{	
+		objetoGanadorTesting.colisionarConPersonaje(personajeTesting)
+		
+		assert.equals(gestorNiveles.nivelActualNumero(), 2)
+	}
+	
+	
+	/*
+
+	test "Si el personaje esta en la misma posicion que la placa, ésta se activa"
+	{
+		// No se como hacer que este test ande
+		// Hay un tema con el ontick y testing que creo que no van de la mano...
+		// Como si no existiera noción del tiempo en testing, lo cual tiene sentido
+		// Por eso tampoco se puede hacer testing de game schedule, no?
+		const posicionPlaca = game.at(5,5)
+		placaTesting.position(posicionPlaca)
+		
+		placaTesting.configuracionInicial()
+		personajeTesting.position(posicionPlaca.down(1))
+		personajeTesting.moverA(arriba)
+		//personajeInteligente.position(posicionPlaca)
+		
+		//assert.that(placaTesting.position() == game.at(5,5))
+		//assert.that(personajeTesting.position() == game.at(5,5))
+		assert.equals(1, placaTesting.ultimoColisionador())
+	}
+	
+	test "Si el personaje inteligente se para sobre el código, éste se desbloquea"
+	{
+		nivel1.reiniciarse()
+		const codigo = new Codigo()
+		codigo.crear()
+		codigo.configuracionInicial()
+		codigo.colisionarConPersonaje(personajeInteligente)
+		assert.that(codigo.activado())
+	}
+	
+	test "Si el personaje fuerte se para sobre el código, éste no se desbloquea"
+	{
+		nivel1.reiniciarse()
+		const codigo = new Codigo()
+		codigo.crear()
+		codigo.configuracionInicial()
+		codigo.colisionarConPersonaje(personajeFuerte)
+		assert.that(!codigo.activado())
+	}
+	
+	* 
+	*/
 }
