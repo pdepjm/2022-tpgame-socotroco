@@ -34,10 +34,15 @@ Para ello deben:
 - Presionar todas las placas
 
 Ambos personajes pueden presionar placas
+
 El Personaje Inteligente puede desbloquear códigos durante 5 segundos
+
 El Personaje Fuerte puede empujar cajas, que a su vez estas pueden presionar placas y atravesar pinches
 
+
+
 Por nivel hay 3 vidas que son compartidas por ambos jugadores, si uno se pincha ambos pierden una vida
+
 Lograrás alcanzar la autorrealización?
 
 
